@@ -11,8 +11,9 @@ import com.revature.services.AccountServices;
 public class Driver {
 	
 	//This is an example of a Singleton design pattern. Only one logger will ever exist. 
-	private static final Logger log = LogManager.getLogger(Driver.class); 
+	//private static final Logger log = LogManager.getLogger(Driver.class); 
 	
+	/*
 	private static AccountServices acntSrvs = new AccountServices();
 
 	public static void main(String[] args) {
@@ -38,6 +39,8 @@ public class Driver {
 	public static void recur() {
 		recur(); 
 	}
+	*/
 	
+	WindowCOnsole=new WindowCOnsole
 
 }

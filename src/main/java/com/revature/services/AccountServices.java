@@ -15,10 +15,10 @@ public class AccountServices {
 		
 		private AccountDAO dao= new AccountDAO(); 
 		
-		public Account findAccountById(int i) {
-			log.info("I am accessing account "+i+" from the service.");
+		public Account findAccountById(int id) {
+			log.info("I am accessing account "+id+" from the service.");
 			
-			return dao.findById(i); 
+			return dao.findById(id); 
 			
 		}
 

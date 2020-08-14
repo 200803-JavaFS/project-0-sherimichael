@@ -25,7 +25,7 @@ public class UserServices {
 	}
 	
 	public boolean addNewUser(User user) {
-		Log.info("uadding new user users");
+		Log.info("adding new user users");
 		if (dao.addUser(user)) {
 			return true;
 		}

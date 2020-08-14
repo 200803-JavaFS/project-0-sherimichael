@@ -18,7 +18,7 @@ public class ConnectionUtility {
 		
 	}
 	*/
-	
+	/*
 	public static Connection conn = null;
 	public static Connection getConnection() throws SQLException {
 		try {
@@ -63,5 +63,5 @@ public class ConnectionUtility {
 			System.out.println(conn3);
 		}
 	
-
+*/
 }
