@@ -1,5 +1,7 @@
 package com.revature.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.Scanner;
 
 import com.revature.dao.AccountDAO;
@@ -7,13 +9,15 @@ import com.revature.services.UserServices;
 
 public class WelcomeConsole {
 	
+	private static final Logger log = LogManager.getLogger(WelcomeConsole.class); 
 	private static final Scanner scan = new Scanner(System.in);
 	/*
 	 * private UserServices userSrvc = new UserServices();
 	   private AccountDAO acntDao = new AccountDAO(); 
 	*/
 	
-	public void beginApp() {
+	public void welcomeApp() {
+		log.info("@welcomeApp - Welcome to the Centennial State Credit Union");
 		System.out.println("Welcome to the Centennial State Credit Union. \n\n"
 			
 				+ "How may we help you today? Please select below: \n\n"
@@ -30,7 +34,7 @@ public class WelcomeConsole {
 		switch(choice){
 			case "1": 
 				LoginScreen login= new LoginScreen();
-				login.loginAcnt();
+				login.acntLogin();
 				break;
 			case "2":
 				NewMemberScreen newMember= new NewMemberScreen();
@@ -41,16 +45,9 @@ public class WelcomeConsole {
 				break;
 			default:
 				System.out.println("You have entered an incorrect value. Please try again.");
-				beginApp();
+				welcomeApp();
 				break;
 		}
 	}
-
-    public static void main(String[] args) {    	
-    	WelcomeConsole wc = new WelcomeConsole();
-    	wc.beginApp();
-    	
-    	
-    }
 
 }

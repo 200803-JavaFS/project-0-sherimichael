@@ -3,39 +3,50 @@ package com.revature.models;
 import java.io.Serializable;
 
 public class Account implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L; 
 	
-	private int accountNo;
-	private AcntType acntType;
+	private String accountNo;
+	private String email;
+	private int acntType; //1 = checking, 2 = savings
 	private double balance;
+	private int acntStatus;
+	private boolean isActive;
 	private boolean isJoint; // default=false
-	private boolean isLinked;
 	
-	public enum AcntType {
-		CHECKING, SAVINGS, MONEY_MARKET;
+	public Account() {
+		super();
 	}
 	
-	public Account () {}
-	
-	public Account(int accountNo, AcntType acntType) {
+	public Account(String accountNo, String email, int acntType, double balance, boolean isJoint) {
+		super();
 		this.accountNo = accountNo;
 		this.acntType = acntType;
+		this.balance = balance;
+		this.isJoint = isJoint;
 	}
 	
-	public int getAccountNo() {
+	public String getAccountNo() {
 		return accountNo;
 	}
 
-	public void setAccountNo(int accountNo) {
+	public void setAccountNo(String accountNo) {
 		this.accountNo = accountNo;
 	}
 
-	public AcntType getAcntType() {
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public int getAcntType() {
 		return acntType;
 	}
 
-	public void setAcntType(AcntType acntType) {
+	public void setAcntType(int acntType) {
 		this.acntType = acntType;
 	}
 
@@ -46,6 +57,22 @@ public class Account implements Serializable {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
+	
+	public int getAcntStatus() {
+		return acntStatus;
+	}
+
+	public void setAcntStatus(int acntStatus) {
+		this.acntStatus = acntStatus;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 
 	public boolean isJoint() {
 		return isJoint;
@@ -54,25 +81,10 @@ public class Account implements Serializable {
 	public void setJoint(boolean isJoint) {
 		this.isJoint = isJoint;
 	}
-	
-	public boolean isLinked() {
-		return isLinked;
-	}
-
-	public void setLinked(boolean isLinked) {
-		this.isLinked = isLinked;
-	}
 
 	@Override
 	public String toString() {
-		return "Account [accountNo=" + accountNo + ", acntType=" + acntType + ", balance=" + balance + ", isJoint="
-				+ isJoint + ", isLinked=" + isLinked + "]";
+		return "Account [accountNo=" + accountNo + ", email=" + email + ", acntType=" + acntType + ", balance="
+				+ balance + ", acntStatus=" + acntStatus + ", isActive=" + isActive + ", isJoint=" + isJoint + "]";
 	}
-
-	
-
-
-	
-		
-	
 }
