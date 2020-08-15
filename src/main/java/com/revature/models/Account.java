@@ -34,7 +34,6 @@ public class Account implements Serializable {
 		this.accountNo = accountNo;
 	}
 
-
 	public String getEmail() {
 		return email;
 	}
@@ -88,6 +87,4 @@ public class Account implements Serializable {
 		return "Account [accountNo=" + accountNo + ", email=" + email + ", acntType=" + acntType + ", balance="
 				+ balance + ", acntStatus=" + acntStatus + ", isActive=" + isActive + ", isJoint=" + isJoint + "]";
 	}
-
-	
 }

@@ -43,7 +43,7 @@ public class UserDAO implements IntrfUserDAO {
 						result.getString("last_name"), null,
 						result.getString("pword"));
 				if (result.getString("email_fk") != null) {
-					user.setEmail(iAcntDao.findbyAcntNo(result.getString("email_fk")));
+					user.setEmail(iAcntDao.findByAcntNo(result.getString("email_fk")));
 				} 
 				list.add(user);
 			}
@@ -56,7 +56,7 @@ public class UserDAO implements IntrfUserDAO {
 	}
 
 	@Override
-	public User findbyId(int id) {
+	public User findById(int id) {
 		try (Connection conn = ConnectionUtility.getConnection()) {
 			String sql = "SELECT * FROM avengers WHERE superhero_id =" + id + ";";
 
@@ -69,7 +69,7 @@ public class UserDAO implements IntrfUserDAO {
 						result.getString("last_name"), null,
 						result.getString("pword"));
 				if (result.getString("email_fk") != null) {
-					user.setEmail(iAcntDao.findbyAcntNo(result.getString("email_fk")));
+					user.setEmail(iAcntDao.findByAcntNo(result.getString("email_fk")));
 				} 
 				return user;
 			}

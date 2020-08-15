@@ -7,8 +7,10 @@ import com.revature.models.Account;
 public interface IntrfAccountDAO {
 	//These methods handle CRUD ops and read info back to Java
 	
-		public List<Account> findAllUsers();
-		public Account findbyAcntNo(String string);
+		public List<Account> findAllAccounts();
+		public Account findByAcntNo(String string);
+		public Account findByEmail(String string);
 		public boolean addAccount(Account addAccount);
 		public boolean updateAccount(Account updateAccount);
+		boolean addAcntWithJointUser(Account acnt);
 }
