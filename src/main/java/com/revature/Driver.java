@@ -2,8 +2,10 @@
 
 package com.revature;
 
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.revature.utils.WelcomeConsole;
 
 import com.revature.models.Account;
 import com.revature.services.AccountServices;
@@ -11,8 +13,12 @@ import com.revature.services.AccountServices;
 public class Driver {
 	
 	//This is an example of a Singleton design pattern. Only one logger will ever exist. 
-	//private static final Logger log = LogManager.getLogger(Driver.class); 
+	private static final Logger log = LogManager.getLogger(Driver.class); 
 	
+	public void start() {
+		WelcomeConsole start = new WelcomeConsole();
+		start.beginApp();
+	}
 	/*
 	private static AccountServices acntSrvs = new AccountServices();
 
@@ -40,7 +46,5 @@ public class Driver {
 		recur(); 
 	}
 	*/
-	
-	WindowCOnsole=new WindowCOnsole
 
 }
