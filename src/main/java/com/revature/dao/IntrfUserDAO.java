@@ -13,8 +13,8 @@ public interface IntrfUserDAO {
 	public User findbyId(int id);
 	public boolean addUser(User addUser);
 	public boolean updateUser(User updateUser);
-	
-
+	boolean addUserWithJointAccnt(User jointUser);
+	boolean deleteUser(int userId);
 }
 
 

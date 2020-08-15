@@ -10,6 +10,8 @@ public class Account implements Serializable {
 	private String email;
 	private int acntType; //1 = checking, 2 = savings
 	private double balance;
+	private int acntStatus;
+	private boolean isActive;
 	private boolean isJoint; // default=false
 	
 	public Account() {
@@ -56,6 +58,22 @@ public class Account implements Serializable {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
+	
+	public int getAcntStatus() {
+		return acntStatus;
+	}
+
+	public void setAcntStatus(int acntStatus) {
+		this.acntStatus = acntStatus;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 
 	public boolean isJoint() {
 		return isJoint;
@@ -67,7 +85,9 @@ public class Account implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Account [accountNo=" + accountNo + ", acntType=" + acntType + ", balance=" + balance + ", isJoint="
-				+ isJoint + "]";
-	}	
+		return "Account [accountNo=" + accountNo + ", email=" + email + ", acntType=" + acntType + ", balance="
+				+ balance + ", acntStatus=" + acntStatus + ", isActive=" + isActive + ", isJoint=" + isJoint + "]";
+	}
+
+	
 }
