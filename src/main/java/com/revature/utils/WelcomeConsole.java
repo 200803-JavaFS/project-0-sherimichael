@@ -16,8 +16,8 @@ public class WelcomeConsole {
 	   private AccountDAO acntDao = new AccountDAO(); 
 	*/
 	
-	public void beginApp() {
-		log.info("@beginApp - Welcome to the Centennial State Credit Union");
+	public void welcomeApp() {
+		log.info("@welcomeApp - Welcome to the Centennial State Credit Union");
 		System.out.println("Welcome to the Centennial State Credit Union. \n\n"
 			
 				+ "How may we help you today? Please select below: \n\n"
@@ -45,7 +45,7 @@ public class WelcomeConsole {
 				break;
 			default:
 				System.out.println("You have entered an incorrect value. Please try again.");
-				beginApp();
+				welcomeApp();
 				break;
 		}
 	}

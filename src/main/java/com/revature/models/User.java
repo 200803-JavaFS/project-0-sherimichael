@@ -12,35 +12,32 @@ public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L; 
 	
-	private UserType userType;
+	private int userType; // 1 = member, 2 = employee, 3 = admin
 	private String firstName;
 	private String lastName;
 	private String email; //login uname is email
 	private String password;
 	
-	//info on enum https://www.geeksforgeeks.org/enum-in-java/
-	public enum UserType {
-		MEMBER, EMPLOYEE, ADMIN;
-	}
-	
 	//Constructors
 	
-	public User() {}
-	
-	public User(String email) {
-		this.setEmail(email);		
+	public User() {
+		super();
 	}
 	
-	public User(String email, UserType userType) {
-		this.setEmail(email);
+	public User(int userType, String firstName, String lastName, String email, String password) {
+		super();
 		this.userType = userType;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
 	}
 
-	public UserType getUserType() {
+	public int getUserType() {
 		return userType;
 	}
 
-	public void setUserType(UserType userType) {
+	public void setUserType(int userType) {
 		this.userType = userType;
 	}
 
@@ -83,5 +80,6 @@ public class User implements Serializable {
 				+ ", password=" + password + "]";
 	}
 
+	
 }
 

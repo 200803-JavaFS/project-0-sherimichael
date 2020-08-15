@@ -3,24 +3,24 @@ package com.revature.models;
 import java.io.Serializable;
 
 public class Account implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L; 
 	
 	private int accountNo;
-	private AcntType acntType;
+	private int acntType; //1 = checking, 2 = savings
 	private double balance;
 	private boolean isJoint; // default=false
-	private boolean isLinked;
 	
-	public enum AcntType {
-		CHECKING, SAVINGS, MONEY_MARKET;
+	public Account() {
+		super();
 	}
 	
-	public Account () {}
-	
-	public Account(int accountNo, AcntType acntType) {
+	public Account(int accountNo, int acntType, double balance, boolean isJoint) {
+		super();
 		this.accountNo = accountNo;
 		this.acntType = acntType;
+		this.balance = balance;
+		this.isJoint = isJoint;
 	}
 	
 	public int getAccountNo() {
@@ -31,11 +31,11 @@ public class Account implements Serializable {
 		this.accountNo = accountNo;
 	}
 
-	public AcntType getAcntType() {
+	public int getAcntType() {
 		return acntType;
 	}
 
-	public void setAcntType(AcntType acntType) {
+	public void setAcntType(int acntType) {
 		this.acntType = acntType;
 	}
 
@@ -54,25 +54,11 @@ public class Account implements Serializable {
 	public void setJoint(boolean isJoint) {
 		this.isJoint = isJoint;
 	}
-	
-	public boolean isLinked() {
-		return isLinked;
-	}
-
-	public void setLinked(boolean isLinked) {
-		this.isLinked = isLinked;
-	}
 
 	@Override
 	public String toString() {
 		return "Account [accountNo=" + accountNo + ", acntType=" + acntType + ", balance=" + balance + ", isJoint="
-				+ isJoint + ", isLinked=" + isLinked + "]";
+				+ isJoint + "]";
 	}
-
-	
-
-
-	
-		
 	
 }

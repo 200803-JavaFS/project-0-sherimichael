@@ -34,6 +34,7 @@ public class LoginScreen {
 		switch(choice){
 		case "1": 
 			log.info("@selectMenuSwith - checking balance");
+			
 			break;
 		case "2":
 			log.info("@selectMenuSwith - deposit");
