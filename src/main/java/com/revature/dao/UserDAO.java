@@ -7,17 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.models.User;
-import com.revature.models.User.UserType;
 import com.revature.utils.ConnectionUtility;
 
 public class UserDAO implements IntrfUserDAO {
 	
-	private IntrfAccountDAO intrAccountDao = new AccountDAO();
+	private IntrfAccountDAO iAcntDao = new AccountDAO();
 
 	@Override
 	public List<User> findAllUsers() {
+		
 		try (Connection conn = ConnectionUtility.getConnection()) {
-			String sql = "SELECT * FROM users;";
+			String sql = "SELECT * FROM acnt_holders;";
 
 			Statement statement = conn.createStatement();
 
@@ -26,12 +26,14 @@ public class UserDAO implements IntrfUserDAO {
 			ResultSet result = statement.executeQuery(sql);
 
 			while (result.next()) {
-				User user = new User(result.getString("user_type"), result.getString("first_name"),
+				User user = new User(result.getInt("id"),result.getInt("user_type"), result.getString("first_name"),
 						result.getString("last_name"), null,
-						result.getString("password"));
-				if (result.getString("email_fk") != null) {
-					user.setEmail(((Object) intrAccountDao).findById(result.getString("email_fk")));
-				}
+						result.getString("pword"));
+				if result.getString("email_fk") != null) {
+					user.setEmail(iAcntDao.findByAcntNo(result.getString("email_fk")));
+				}  Integer.toString(a)
+				list.add(a);
+			}
 				list.add(user);
 			}
 			return list;

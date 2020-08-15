@@ -6,7 +6,8 @@ public class Account implements Serializable {
 
 	private static final long serialVersionUID = 1L; 
 	
-	private int accountNo;
+	private String accountNo;
+	private String email;
 	private int acntType; //1 = checking, 2 = savings
 	private double balance;
 	private boolean isJoint; // default=false
@@ -15,7 +16,7 @@ public class Account implements Serializable {
 		super();
 	}
 	
-	public Account(int accountNo, int acntType, double balance, boolean isJoint) {
+	public Account(String accountNo, String email, int acntType, double balance, boolean isJoint) {
 		super();
 		this.accountNo = accountNo;
 		this.acntType = acntType;
@@ -23,14 +24,23 @@ public class Account implements Serializable {
 		this.isJoint = isJoint;
 	}
 	
-	public int getAccountNo() {
+	public String getAccountNo() {
 		return accountNo;
 	}
 
-	public void setAccountNo(int accountNo) {
+	public void setAccountNo(String accountNo) {
 		this.accountNo = accountNo;
 	}
 
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	public int getAcntType() {
 		return acntType;
 	}
@@ -59,6 +69,5 @@ public class Account implements Serializable {
 	public String toString() {
 		return "Account [accountNo=" + accountNo + ", acntType=" + acntType + ", balance=" + balance + ", isJoint="
 				+ isJoint + "]";
-	}
-	
+	}	
 }

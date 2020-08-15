@@ -12,10 +12,11 @@ public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L; 
 	
+	private int id;
 	private int userType; // 1 = member, 2 = employee, 3 = admin
 	private String firstName;
 	private String lastName;
-	private String email; //login uname is email
+	private Account email; //login uname is email
 	private String password;
 	
 	//Constructors
@@ -24,13 +25,33 @@ public class User implements Serializable {
 		super();
 	}
 	
-	public User(int userType, String firstName, String lastName, String email, String password) {
+	//full args minus id constructor
+	public User(int userType, String firstName, String lastName, Account email, String password) {
 		super();
 		this.userType = userType;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+	}
+	
+	//fulls args constructor
+	public User(int id, int userType, String firstName, String lastName, Account email, String password) {
+		super();
+		this.id = id;
+		this.userType = userType;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getUserType() {
@@ -58,11 +79,11 @@ public class User implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public String getEmail() {
+	public Account getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(Account email) {
 		this.email = email;
 	}
 
@@ -79,7 +100,6 @@ public class User implements Serializable {
 		return "User [userType=" + userType + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", password=" + password + "]";
 	}
-
 	
 }
 

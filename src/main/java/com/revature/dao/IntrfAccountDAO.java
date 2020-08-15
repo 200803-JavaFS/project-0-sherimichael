@@ -8,8 +8,7 @@ public interface IntrfAccountDAO {
 	//These methods handle CRUD ops and read info back to Java
 	
 		public List<Account> findAllUsers();
-		public Account findbyId(int id);
+		public Account findbyAcntNo(String string);
 		public boolean addAccount(Account addAccount);
 		public boolean updateAccount(Account updateAccount);
-
 }
