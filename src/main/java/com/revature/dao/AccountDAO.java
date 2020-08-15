@@ -49,7 +49,7 @@ public class AccountDAO implements IntrfAccountDAO {
 	@Override
 	public Account findByAcntNo(String acnt_no) {
 		try(Connection conn = ConnectionUtility.getConnection()){
-			String sql = "SELECT * FROM accounts WHERE email = ?;";
+			String sql = "SELECT * FROM accounts WHERE acnt_no = ?;";
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 			
@@ -60,6 +60,7 @@ public class AccountDAO implements IntrfAccountDAO {
 			if(result.next()) {
 				Account acnt = new Account();
 				acnt.setAccountNo(result.getString("acnt_no"));
+				acnt.setEmail(result.getString("email"));
 				acnt.setAcntType(result.getInt("acnt_type"));
 				acnt.setBalance(result.getDouble("balance"));
 				acnt.setAcntStatus(result.getInt("acnt_status"));
@@ -67,7 +68,37 @@ public class AccountDAO implements IntrfAccountDAO {
 				acnt.setJoint(result.getBoolean("joint"));	
 				return acnt;
 			} else {
-				log.info("@AccountDAO - could not find acnt_no");
+				return null;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public Account findByEmail(String email) {
+		try(Connection conn = ConnectionUtility.getConnection()){
+			String sql = "SELECT * FROM accounts WHERE email = ?;";
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setString(1, email);
+			
+			ResultSet result = statement.executeQuery();
+			
+			if(result.next()) {
+				Account acnt = new Account();
+				acnt.setAccountNo(result.getString("acnt_no"));
+				acnt.setEmail(result.getString("email"));
+				acnt.setAcntType(result.getInt("acnt_type"));
+				acnt.setBalance(result.getDouble("balance"));
+				acnt.setAcntStatus(result.getInt("acnt_status"));
+				acnt.setActive(result.getBoolean("active"));
+				acnt.setJoint(result.getBoolean("joint"));	
+				return acnt;
+			} else {
 				return null;
 			}
 			
@@ -125,42 +156,6 @@ public class AccountDAO implements IntrfAccountDAO {
 			statement.execute();
 			return true;
 		}catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-	
-	@Override
-	public boolean addAcntWithJointUser(Account acnt) {
-		try (Connection conn = ConnectionUtility.getConnection()){
-			
-			String sql = "BEGIN; "
-					+ "INSERT INTO accounts (acnt_no, email, acnt_type, balance, isJoint, acnt_status, isActive)"
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?);"
-					+ "INSERT INTO users (user_type, first_name, last_name, email_fk, pword)"
-					+ "VALUES (?, ?, ?, ?, ?);"
-					+ "COMMIT;";
-			
-			PreparedStatement statement = conn.prepareStatement(sql);
-			
-			User user = acnt.getEmail();
-			
-			int index = 0;
-			statement.setString(++index, acnt.getAccountNo());
-			statement.setInt(++index, acnt.getAcntType());
-			statement.setDouble(++index, acnt.getBalance());
-			statement.setBoolean(++index, acnt.isJoint());
-			statement.setInt(++index, acnt.getAcntStatus());
-			statement.setBoolean(++index, acnt.isActive());
-			statement.setInt(++index, user.getUserType());
-			statement.setString(++index, user.getFirstName());
-			statement.setString(++index, user.getLastName());
-			statement.setString(++index, user.getPassword());
-			statement.setString(++index, acnt.getEmail());
-			
-			statement.execute();
-			return true;
-		}catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return false;

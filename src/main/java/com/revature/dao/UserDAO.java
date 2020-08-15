@@ -25,12 +25,42 @@ import com.revature.utils.ConnectionUtility;
 public class UserDAO implements IntrfUserDAO {
 	
 	private IntrfAccountDAO iAcntDao = new AccountDAO();
+	private User u = new User();
 
 	@Override
-	public List<User> findAllUsers() {
+	public List<User> findAllMembers() {
+		
+			try (Connection conn = ConnectionUtility.getConnection()) {
+				String sql = "SELECT * FROM acnt_holders WHERE user_type = 1;";
+
+				Statement statement = conn.createStatement();
+
+				List<User> list = new ArrayList<>();
+
+				ResultSet result = statement.executeQuery(sql);
+
+				while (result.next()) {
+					User user = new User(result.getInt("id"),result.getInt("user_type"), result.getString("first_name"),
+						result.getString("last_name"), null,
+						result.getString("pword"));
+					if (result.getString("email_fk") != null) {
+					user.setEmail(iAcntDao.findByAcntNo(result.getString("email_fk")));
+					} 
+					list.add(user);
+				}
+				return list;
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return null;
+	}
+	
+	@Override
+	public List<User> findAllEmployees() {
 		
 		try (Connection conn = ConnectionUtility.getConnection()) {
-			String sql = "SELECT * FROM acnt_holders;";
+			String sql = "SELECT * FROM acnt_holders WHERE user_type = 2;";
 
 			Statement statement = conn.createStatement();
 
@@ -39,16 +69,43 @@ public class UserDAO implements IntrfUserDAO {
 			ResultSet result = statement.executeQuery(sql);
 
 			while (result.next()) {
-				User user = new User(result.getInt("id"),result.getInt("user_type"), result.getString("first_name"),
-						result.getString("last_name"), null,
-						result.getString("pword"));
-				if (result.getString("email_fk") != null) {
-					user.setEmail(iAcntDao.findByAcntNo(result.getString("email_fk")));
-				} 
+					User user = new User();
+							result.getString("email");
+							result.getString("first_name");
+							result.getString("last_name");
+							result.getString("pword");
 				list.add(user);
-			}
+				}
 			return list;
-					
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<User> findAllAdmins() {
+		
+		try (Connection conn = ConnectionUtility.getConnection()) {
+			String sql = "SELECT * FROM acnt_holders WHERE user_type = 3;";
+
+			Statement statement = conn.createStatement();
+
+			List<User> list = new ArrayList<>();
+
+			ResultSet result = statement.executeQuery(sql);
+
+			while (result.next()) {
+					User user = new User();
+							result.getString("email");
+							result.getString("first_name");
+							result.getString("last_name");
+							result.getString("pword");
+				list.add(user);
+				}
+			return list;
+				
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -56,29 +113,77 @@ public class UserDAO implements IntrfUserDAO {
 	}
 
 	@Override
-	public User findById(int id) {
-		try (Connection conn = ConnectionUtility.getConnection()) {
-			String sql = "SELECT * FROM avengers WHERE superhero_id =" + id + ";";
+	public User findMemberById(int id) {
+			try (Connection conn = ConnectionUtility.getConnection()) {
+				String sql = "SELECT * FROM acnt_holders WHERE user_type = 1 and user_id =" + id + ";";
 
-			Statement statement = conn.createStatement();
+				Statement statement = conn.createStatement();
 
-			ResultSet result = statement.executeQuery(sql);
+				ResultSet result = statement.executeQuery(sql);
 
-			if (result.next()) {
-				User user = new User(result.getInt("id"),result.getInt("user_type"), result.getString("first_name"),
+				if (result.next()) {
+					User user = new User(result.getInt("id"),result.getInt("user_type"), result.getString("first_name"),
 						result.getString("last_name"), null,
 						result.getString("pword"));
-				if (result.getString("email_fk") != null) {
-					user.setEmail(iAcntDao.findByAcntNo(result.getString("email_fk")));
-				} 
+					if (result.getString("email_fk") != null) {
+						user.setEmail(iAcntDao.findByAcntNo(result.getString("email_fk")));
+					} 
 				return user;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+				}
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
+			return null;
 	}
+	
+	@Override
+	public User findEmployeeById(int id) {
+			try (Connection conn = ConnectionUtility.getConnection()) {
+				String sql = "SELECT * FROM acnt_holders WHERE user_type = 2 and user_id =" + id + ";";
 
+				Statement statement = conn.createStatement();
+
+				ResultSet result = statement.executeQuery(sql);
+
+				if (result.next()) {
+					User user = new User();
+							result.getString("email");
+							result.getString("first_name");
+							result.getString("last_name");
+							result.getString("pword");
+				return user;
+				}
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
+			return null;
+	}
+	
+	@Override
+	public User findAdminById(int id) {
+			try (Connection conn = ConnectionUtility.getConnection()) {
+				String sql = "SELECT * FROM acnt_holders WHERE user_type = 3 and user_id =" + id + ";";
+
+				Statement statement = conn.createStatement();
+
+				ResultSet result = statement.executeQuery(sql);
+
+				if (result.next()) {
+					User user = new User();
+							result.getString("email");
+							result.getString("first_name");
+							result.getString("last_name");
+							result.getString("pword");
+				return user;
+				}
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
+			return null;
+	}
 	@Override
 	public boolean addUser(User user) {
 		try (Connection conn = ConnectionUtility.getConnection()) {
@@ -179,7 +284,7 @@ public class UserDAO implements IntrfUserDAO {
 	@Override
 	public boolean deleteUser(int userId) {
 		try (Connection conn = ConnectionUtility.getConnection()) {
-			String sql = "DELETE FROM avengers WHERE superhero_id =" + userId + ";";
+			String sql = "DELETE FROM acnt_holders WHERE user_type !=1 and user_id =" + userId + ";";
 
 			Statement statement = conn.createStatement();
 
@@ -190,8 +295,4 @@ public class UserDAO implements IntrfUserDAO {
 		}
 		return false;
 	}
-
-	
-
-
 }

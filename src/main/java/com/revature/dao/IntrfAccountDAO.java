@@ -12,5 +12,4 @@ public interface IntrfAccountDAO {
 		public Account findByEmail(String string);
 		public boolean addAccount(Account addAccount);
 		public boolean updateAccount(Account updateAccount);
-		boolean addAcntWithJointUser(Account acnt);
 }
