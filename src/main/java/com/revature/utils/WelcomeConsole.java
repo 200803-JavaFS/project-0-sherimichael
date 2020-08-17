@@ -31,7 +31,7 @@ public class WelcomeConsole {
 				break;
 			case "2":
 				NewMemberScreen newMember= new NewMemberScreen();
-				newMember.createNewMember();
+				newMember.checkAgeNewMember();
 				break;
 			case "3":
 				System.out.println("Thank you. We hope to see you again soon.");

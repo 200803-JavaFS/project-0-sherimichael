@@ -106,7 +106,7 @@ public class AccountDAO implements IntrfAccountDAO {
 		try (Connection conn = ConnectionUtility.getConnection()) {
 
 			String sql = "INSERT INTO accounts (acnt_id, acnt_type, balance, acnt_status, user_id_fk)"
-				+ "VALUES (?, ?, ?, ?, ?);";
+				+ "VALUES (?, ?, ?, ?, ?) WHERE acnt_type != 4;";
 
 			PreparedStatement statement = conn.prepareStatement(sql);
 
@@ -134,7 +134,8 @@ public class AccountDAO implements IntrfAccountDAO {
 	@Override
 	public boolean updateAccount(Account a) {
 		try (Connection conn = ConnectionUtility.getConnection()) {
-			String sql = "UPDATE accounts SET acnt_type = ?, balance= acnt_status = ?, user_id_fk =? WHERE acnt_id = ?;";
+			String sql = "UPDATE accounts SET account_id = ?, acnt_type = ?, balance= acnt_status = ?, user_id_fk =? "
+					+ "WHERE acnt_id = ?;";
 		
 			PreparedStatement statement = conn.prepareStatement(sql);
 
@@ -149,7 +150,6 @@ public class AccountDAO implements IntrfAccountDAO {
 			}else {
 				statement.setString(++index, null);
 			}
-			statement.setInt(++index, a.getAccountId());
 		
 			statement.execute();
 			return true;

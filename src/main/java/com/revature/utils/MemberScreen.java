@@ -12,7 +12,6 @@ public class MemberScreen {
 	private static final Logger log = LogManager.getLogger(WelcomeConsole.class); 
 	private static final Scanner scan = new Scanner(System.in);
 	private int id;
-	private double b;
 	
 	public void MemberApp(int userId) {
 		log.info("@MemberApp in MemberScreen");
@@ -22,11 +21,12 @@ public class MemberScreen {
 		          + "2. Make a deposit.\n"
 		          + "3. Make a withdrawel.\n"
 		          + "4. Transfer money from one account to another."
-		          + "5. Exit."
+		          + "5. Open a new account.\n"
+		          + "6. Exit\n."
 			);
 			String choice = scan.nextLine(); 
 			selectMenuSwitch(choice, userId);
-		}
+	}
 	
 	public void selectMenuSwitch(String choice, int userId) {
 		
@@ -35,28 +35,32 @@ public class MemberScreen {
 		switch(choice){
 			case "1": 
 				log.info("@selectMenuSwith - checking balance");
-				b=transaxn.getAcntBalance(choice, userId);
-				//System.out.println("Your new checking balance is $" + b);
+				transaxn.getAcntBalance(choice, userId);
 			case "2":			
 				log.info("@selectMenuSwith - deposit");
-				System.out.println("What is the amount you want to deposit?");
+				System.out.print("\nWhat is the amount you want to deposit? $");
 				String s = scan.nextLine();
-				int amount = Integer.parseInt(s);
-				b = transaxn.DepositMoney(userId, amount);
-				//System.out.println("Your new checking balance is $" + b);
+				double amount = Double.parseDouble(s);
+				transaxn.depositMoney(userId, amount);
 				break;
 			case "3": 
 				log.info("@selectMenuSwith - withdraw");
-				System.out.println("What is the amount you want to withdraw?");
+				System.out.println("What is the amount you want to withdraw? $");
 				String s2 = scan.nextLine();
-				int wAmount = Integer.parseInt(s2);
-				transaxn.WithdrawMoney(userId, wAmount);
+				double wAmount = Double.parseDouble(s2);
+				transaxn.withdrawMoney(userId, wAmount);
 				break;
 			case "4":
 				log.info("@selectMenuSwith - transfer");
-				transaxn.TransferMoney();
+				transaxn.transferMoney();
 				break;
 			case "5":
+				System.out.println("An admin of The Credit Union will contact you soon to help\n"
+						+ "you open a new account. Thank you!");
+				AdminScreen aScreen = new AdminScreen();
+				aScreen.alertNewAcntRequested(userId);
+				break;
+			case "6":
 				System.out.println("Thank you. We hope to see you again soon.");
 				break;
 			default:
@@ -74,7 +78,8 @@ public class MemberScreen {
 		          + "2. Make a deposit.\n"
 		          + "3. Make a withdrawel.\n"
 		          + "4. Transfer money from one account to another."
-		          + "5. Exit."
+		          + "5. Open a new account.\n"
+		          + "6. Exit."
 			);
 			id = userId;
 			String choice = scan.nextLine(); 

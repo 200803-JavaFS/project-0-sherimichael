@@ -88,8 +88,8 @@ public class UserDAO implements IntrfUserDAO {
 	public boolean addUser(User user) {
 		try (Connection conn = ConnectionUtility.getConnection()) {
 
-			String sql = "INSERT INTO users (user_type, first_name, last_name, pword, email)"
-					+ "VALUES (?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO users (user_id, user_type, first_name, last_name, pword, email)"
+					+ "VALUES (?, ?, ?, ?, ?, ?);";
 
 			PreparedStatement statement = conn.prepareStatement(sql);
 
@@ -113,8 +113,8 @@ public class UserDAO implements IntrfUserDAO {
 	@Override
 	public boolean updateUser(User user) {
 		try (Connection conn = ConnectionUtility.getConnection()) {
-			String sql = "UPDATE acnt_holders SET user_type = ?, first_name= ?, "
-					+ "last_name = ?, email_fk = ? WHERE user_id = ?;";
+			String sql = "UPDATE users SET user_type = ?, first_name= ?, "
+					+ "last_name = ?, email_fk = ?, pword = ? WHERE user_id = ?;";
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 
@@ -139,7 +139,7 @@ public class UserDAO implements IntrfUserDAO {
 	@Override
 	public boolean deleteUser(int userId) {
 		try (Connection conn = ConnectionUtility.getConnection()) {
-			String sql = "DELETE FROM acnt_holders WHERE user_type !=1 and user_id =" + userId + ";";
+			String sql = "DELETE FROM users WHERE user_type !=1 and user_id =" + userId + ";";
 
 			Statement statement = conn.createStatement();
 

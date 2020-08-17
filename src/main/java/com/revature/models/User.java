@@ -13,7 +13,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L; 
 	
 	private int userId;
-	private int userType; // 1 = member, 2 = employee, 3 = admin
+	private int userType; // 1 = member, 2 = employee, 3 = admin, 4 = awaiting confirmation
 	private String firstName;
 	private String lastName;
 	private String email; //login uname is email

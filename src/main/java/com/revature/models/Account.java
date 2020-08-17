@@ -12,10 +12,12 @@ public class Account implements Serializable {
 	private int acntStatus;
 	private User userID;
 	
+	//no args constructor
 	public Account() {
 		super();
 	}
 
+	//full args constructor
 	public Account(int accountId, int acntType, double balance, int acntStatus, User userID) {
 		super();
 		this.accountId = accountId;
@@ -25,12 +27,13 @@ public class Account implements Serializable {
 		this.userID = userID;
 	}
 
-	public Account(int accountId, double checkingAcntBalance, double savingsAcntBalance, int acntStatus) {
+	//full args - accountId(serial -pk) field
+	public Account(int acntType, double balance, int acntStatus, User userID) {
 		super();
-		this.accountId = accountId;
+		this.acntType = acntType;
 		this.balance = balance;
 		this.acntStatus = acntStatus;
-		this.acntStatus = acntStatus;
+		this.userID = userID;
 	}
 
 	public int getAccountId() {
