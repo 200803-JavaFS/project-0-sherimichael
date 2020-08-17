@@ -4,8 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.Scanner;
 
-import com.revature.Driver;
-import com.revature.services.UserServices;
+import com.revature.services.LoginServices;
 
 public class LoginScreen {
 	
@@ -14,46 +13,17 @@ public class LoginScreen {
 	
 	public void acntLogin() {
 		
-		log.info("@acntLogin");
+		log.info("@acntLogin - userId");
+		System.out.println("Good day! To log into The Credit Union,");
+		System.out.print("please enter your userId:");
+		String userId = scan.nextLine();
+		System.out.print("please enter your password:");
+		String password = scan.nextLine();
+		password = password.toLowerCase();
 		
+		int id = Integer.parseInt(userId);
 		
-		
-		System.out.println("\nWelcome back! What would you like to do today? \n"
-				          + "1. Check an account balance. \n"
-				          + "2. Make a deposit.\n"
-				          + "3. Make a withdrawel.\n"
-				          + "4. Transfer money from one account to another."
-				          + "5. Exit."
-	    );
-		String choice = scan.nextLine(); 
-		selectMenuSwitch(choice);
+		LoginServices ls = new LoginServices();
+		ls.checkPassword(id, password);
 	}
-	
-	public void selectMenuSwitch(String choice) {
-		
-		switch(choice){
-		case "1": 
-			log.info("@selectMenuSwith - checking balance");
-			
-			break;
-		case "2":
-			log.info("@selectMenuSwith - deposit");
-			break;
-		case "3": 
-			log.info("@selectMenuSwith - withdraw");
-			break;
-		case "4":
-			log.info("@selectMenuSwith - transfer");
-			break;
-		case "5":
-			System.out.println("Thank you. We hope to see you again soon.");
-			break;
-		default:
-			System.out.println("You have entered an incorrect value. Please try again.");
-			acntLogin();
-			break;
-	}
-	}
-	
-
 }

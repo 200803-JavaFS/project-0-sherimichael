@@ -4,28 +4,21 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.Scanner;
 
-import com.revature.dao.AccountDAO;
-import com.revature.services.UserServices;
-
 public class WelcomeConsole {
 	
 	private static final Logger log = LogManager.getLogger(WelcomeConsole.class); 
 	private static final Scanner scan = new Scanner(System.in);
-	/*
-	 * private UserServices userSrvc = new UserServices();
-	   private AccountDAO acntDao = new AccountDAO(); 
-	*/
 	
 	public void welcomeApp() {
-		log.info("@welcomeApp - Welcome to the Centennial State Credit Union");
-		System.out.println("Welcome to the Centennial State Credit Union. \n\n"
+		log.info("@welcomeApp - Welcome to The Credit Union");
+		System.out.println("Welcome to The Credit Union. \n\n"
 			
 				+ "How may we help you today? Please select below: \n\n"
-				+ "1. I am a current member and would like to log into my account(s). \n"
-				+ "2. I am not a member and would like to open my first account. \n"
+				+ "1. Take me to the login page. \n"
+				+ "2. Take me to the new member page. \n"
 				+ "3. Exit"
 		);
-		String choice = scan.nextLine(); 
+		String choice = scan.nextLine();
 		welcomeChoiceSwitch(choice);
 	}
 	

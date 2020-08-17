@@ -18,35 +18,35 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.revature.models.Account;
 import com.revature.models.User;
 import com.revature.utils.ConnectionUtility;
 
 public class UserDAO implements IntrfUserDAO {
-	
-	private IntrfAccountDAO iAcntDao = new AccountDAO();
-	private User u = new User();
+
+	private User user = new User();
 
 	@Override
-	public List<User> findAllMembers() {
+	public List<User> findAll() {
 		
 			try (Connection conn = ConnectionUtility.getConnection()) {
-				String sql = "SELECT * FROM acnt_holders WHERE user_type = 1;";
+				String sql = "SELECT * FROM users;";
 
 				Statement statement = conn.createStatement();
 
 				List<User> list = new ArrayList<>();
 
 				ResultSet result = statement.executeQuery(sql);
+				
 
 				while (result.next()) {
-					User user = new User(result.getInt("id"),result.getInt("user_type"), result.getString("first_name"),
-						result.getString("last_name"), null,
-						result.getString("pword"));
-					if (result.getString("email_fk") != null) {
-					user.setEmail(iAcntDao.findByAcntNo(result.getString("email_fk")));
-					} 
-					list.add(user);
+					
+							user.setUserId(result.getInt("user_id"));
+							user.setUserType(result.getInt("user_type"));
+							user.setFirstName(result.getString("first_name"));
+							user.setLastName(result.getString("last_name")); 
+							user.setEmail(result.getString("email"));
+							user.setPassword(result.getString("pword"));
+							list.add(user);
 				}
 				return list;
 			
@@ -56,78 +56,24 @@ public class UserDAO implements IntrfUserDAO {
 			return null;
 	}
 	
-	@Override
-	public List<User> findAllEmployees() {
-		
-		try (Connection conn = ConnectionUtility.getConnection()) {
-			String sql = "SELECT * FROM acnt_holders WHERE user_type = 2;";
-
-			Statement statement = conn.createStatement();
-
-			List<User> list = new ArrayList<>();
-
-			ResultSet result = statement.executeQuery(sql);
-
-			while (result.next()) {
-					User user = new User();
-							result.getString("email");
-							result.getString("first_name");
-							result.getString("last_name");
-							result.getString("pword");
-				list.add(user);
-				}
-			return list;
-				
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	@Override
-	public List<User> findAllAdmins() {
-		
-		try (Connection conn = ConnectionUtility.getConnection()) {
-			String sql = "SELECT * FROM acnt_holders WHERE user_type = 3;";
-
-			Statement statement = conn.createStatement();
-
-			List<User> list = new ArrayList<>();
-
-			ResultSet result = statement.executeQuery(sql);
-
-			while (result.next()) {
-					User user = new User();
-							result.getString("email");
-							result.getString("first_name");
-							result.getString("last_name");
-							result.getString("pword");
-				list.add(user);
-				}
-			return list;
-				
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	@Override
-	public User findMemberById(int id) {
+	public User findById(int id) {
 			try (Connection conn = ConnectionUtility.getConnection()) {
-				String sql = "SELECT * FROM acnt_holders WHERE user_type = 1 and user_id =" + id + ";";
+				String sql = "SELECT * FROM users WHERE user_type = 1 and user_id =" + id + ";";
 
 				Statement statement = conn.createStatement();
 
 				ResultSet result = statement.executeQuery(sql);
 
 				if (result.next()) {
-					User user = new User(result.getInt("id"),result.getInt("user_type"), result.getString("first_name"),
-						result.getString("last_name"), null,
-						result.getString("pword"));
-					if (result.getString("email_fk") != null) {
-						user.setEmail(iAcntDao.findByAcntNo(result.getString("email_fk")));
-					} 
+					User user = new User(
+							result.getInt("user_id"),
+							result.getInt("user_type"), 
+							result.getString("first_name"),
+							result.getString("last_name"),
+							result.getString("email") ,
+							result.getString("pword"));  
 				return user;
 				}
 			
@@ -137,74 +83,24 @@ public class UserDAO implements IntrfUserDAO {
 			return null;
 	}
 	
-	@Override
-	public User findEmployeeById(int id) {
-			try (Connection conn = ConnectionUtility.getConnection()) {
-				String sql = "SELECT * FROM acnt_holders WHERE user_type = 2 and user_id =" + id + ";";
-
-				Statement statement = conn.createStatement();
-
-				ResultSet result = statement.executeQuery(sql);
-
-				if (result.next()) {
-					User user = new User();
-							result.getString("email");
-							result.getString("first_name");
-							result.getString("last_name");
-							result.getString("pword");
-				return user;
-				}
-			
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}	
-			return null;
-	}
 	
-	@Override
-	public User findAdminById(int id) {
-			try (Connection conn = ConnectionUtility.getConnection()) {
-				String sql = "SELECT * FROM acnt_holders WHERE user_type = 3 and user_id =" + id + ";";
-
-				Statement statement = conn.createStatement();
-
-				ResultSet result = statement.executeQuery(sql);
-
-				if (result.next()) {
-					User user = new User();
-							result.getString("email");
-							result.getString("first_name");
-							result.getString("last_name");
-							result.getString("pword");
-				return user;
-				}
-			
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}	
-			return null;
-	}
 	@Override
 	public boolean addUser(User user) {
 		try (Connection conn = ConnectionUtility.getConnection()) {
 
-			String sql = "INSERT INTO acnt_holders (user_type, first_name, last_name, pword, email_fk)"
+			String sql = "INSERT INTO users (user_type, first_name, last_name, pword, email)"
 					+ "VALUES (?, ?, ?, ?, ?);";
 
 			PreparedStatement statement = conn.prepareStatement(sql);
 
 			int index = 0;
+			statement.setInt(++index, user.getUserId());
 			statement.setInt(++index, user.getUserType());
 			statement.setString(++index, user.getFirstName());
 			statement.setString(++index, user.getLastName());
+			statement.setString(++index, user.getEmail());
 			statement.setString(++index, user.getPassword());
-			if(user.getEmail()!=null) {
-				Account account = user.getEmail();
-				statement.setString(++index, account.getEmail());
-			}else {
-				statement.setString(++index, null);
-			}
-
+			
 			statement.execute();
 			return true;
 
@@ -223,17 +119,12 @@ public class UserDAO implements IntrfUserDAO {
 			PreparedStatement statement = conn.prepareStatement(sql);
 
 			int index = 0;
+			statement.setInt(++index, user.getUserId());
 			statement.setInt(++index, user.getUserType());
 			statement.setString(++index, user.getFirstName());
 			statement.setString(++index, user.getLastName());
+			statement.setString(++index, user.getEmail());
 			statement.setString(++index, user.getPassword());
-			if(user.getEmail()!=null) {
-				Account account = user.getEmail();
-				statement.setString(++index, account.getEmail());
-			}else {
-				statement.setString(++index, null);
-			}
-			statement.setInt(++index, user.getId());
 			
 			statement.execute();
 			return true;
@@ -241,42 +132,6 @@ public class UserDAO implements IntrfUserDAO {
 			e.printStackTrace();
 		}
 		
-		return false;
-	}
-	
-	@Override
-	public boolean addUserWithJointAccnt(User user) {
-		try (Connection conn = ConnectionUtility.getConnection()){
-			
-			String sql = "BEGIN; "
-					+ "INSERT INTO accounts (acnt_no, email, acnt_type, balance, isJoint, acnt_status, isActive)"
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?);"
-					+ "INSERT INTO users (user_type, first_name, last_name, email_fk, pword)"
-					+ "VALUES (?, ?, ?, ?, ?);"
-					+ "COMMIT;";
-			
-			PreparedStatement statement = conn.prepareStatement(sql);
-			
-			Account acnt = user.getEmail();
-			
-			int index = 0;
-			statement.setString(++index, acnt.getAccountNo());
-			statement.setInt(++index, acnt.getAcntType());
-			statement.setDouble(++index, acnt.getBalance());
-			statement.setBoolean(++index, acnt.isJoint());
-			statement.setInt(++index, acnt.getAcntStatus());
-			statement.setBoolean(++index, acnt.isActive());
-			statement.setInt(++index, user.getUserType());
-			statement.setString(++index, user.getFirstName());
-			statement.setString(++index, user.getLastName());
-			statement.setString(++index, user.getPassword());
-			statement.setString(++index, acnt.getEmail());
-			
-			statement.execute();
-			return true;
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
 		return false;
 	}
 	

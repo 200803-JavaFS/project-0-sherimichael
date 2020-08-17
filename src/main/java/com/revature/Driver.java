@@ -2,13 +2,13 @@
 
 package com.revature;
 
-import com.revature.utils.IdUser;
+import com.revature.utils.WelcomeConsole;
 
 public class Driver {
 	
 	public static void main(String[] args){
 		
-		IdUser start = new IdUser();
-		start.idUserType();
+		WelcomeConsole start = new WelcomeConsole();
+		start.welcomeApp();
 	}
 }

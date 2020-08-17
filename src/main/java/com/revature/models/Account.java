@@ -6,42 +6,41 @@ public class Account implements Serializable {
 
 	private static final long serialVersionUID = 1L; 
 	
-	private String accountNo;
-	private String email;
-	private int acntType; //1 = checking, 2 = savings
+	private int accountId;
+	private int acntType;
 	private double balance;
 	private int acntStatus;
-	private boolean isActive;
-	private boolean isJoint; // default=false
+	private User userID;
 	
 	public Account() {
 		super();
 	}
-	
-	public Account(String accountNo, String email, int acntType, double balance, boolean isJoint) {
+
+	public Account(int accountId, int acntType, double balance, int acntStatus, User userID) {
 		super();
-		this.accountNo = accountNo;
+		this.accountId = accountId;
 		this.acntType = acntType;
 		this.balance = balance;
-		this.isJoint = isJoint;
-	}
-	
-	public String getAccountNo() {
-		return accountNo;
+		this.acntStatus = acntStatus;
+		this.userID = userID;
 	}
 
-	public void setAccountNo(String accountNo) {
-		this.accountNo = accountNo;
+	public Account(int accountId, double checkingAcntBalance, double savingsAcntBalance, int acntStatus) {
+		super();
+		this.accountId = accountId;
+		this.balance = balance;
+		this.acntStatus = acntStatus;
+		this.acntStatus = acntStatus;
 	}
 
-	public String getEmail() {
-		return email;
+	public int getAccountId() {
+		return accountId;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setAccountId(int accountId) {
+		this.accountId = accountId;
 	}
-	
+
 	public int getAcntType() {
 		return acntType;
 	}
@@ -57,7 +56,7 @@ public class Account implements Serializable {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-	
+
 	public int getAcntStatus() {
 		return acntStatus;
 	}
@@ -66,25 +65,24 @@ public class Account implements Serializable {
 		this.acntStatus = acntStatus;
 	}
 
-	public boolean isActive() {
-		return isActive;
+	public User getUserID() {
+		return userID;
 	}
 
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
+	public void setUserID(User userID) {
+		this.userID = userID;
 	}
 
-	public boolean isJoint() {
-		return isJoint;
-	}
-
-	public void setJoint(boolean isJoint) {
-		this.isJoint = isJoint;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
 	public String toString() {
-		return "Account [accountNo=" + accountNo + ", email=" + email + ", acntType=" + acntType + ", balance="
-				+ balance + ", acntStatus=" + acntStatus + ", isActive=" + isActive + ", isJoint=" + isJoint + "]";
+		return "Account [accountId=" + accountId + ", acntTypee=" + acntType
+				+ ", balance=" + balance + ", acntStatus=" + acntStatus + ", userID=" + userID
+				+ "]";
 	}
+
+	
 }

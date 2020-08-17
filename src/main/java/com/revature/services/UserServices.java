@@ -19,34 +19,14 @@ public class UserServices {
 	private static IntrfUserDAO uDao = new UserDAO();
 	private static IntrfAccountDAO aDao = new AccountDAO();
 	
-	public List<User> findAllMembers() {
-		log.info("Retrieving all members");
-		return uDao.findAllMembers();
-		}
-	
-	public List<User> findAllEmployees() {
-		log.info("Retrieving all members");
-		return uDao.findAllEmployees();
-		}
-	
-	public List<User> findAllAdmins() {
-		log.info("Retrieving all members");
-		return uDao.findAllMembers();
+	public List<User> findAllUsers() {
+		log.info("@UserServices - Retrieving all users");
+		return uDao.findAll();
 		}
 
-	public User findMemberById(int id) {
+	public User findById(int id) {
 		log.info("finding a Avenger with id " + id);
-		return uDao.findMemberById(id);
-	}
-	
-	public User findEmployeeById(int id) {
-		log.info("finding a Avenger with id " + id);
-		return uDao.findEmployeeById(id);
-	}
-	
-	public User findAdminById(int id) {
-		log.info("finding a Avenger with id " + id);
-		return uDao.findAdminById(id);
+		return uDao.findById(id);
 	}
 		
 	public boolean updateUser(User user) {

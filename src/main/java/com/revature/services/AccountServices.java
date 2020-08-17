@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.revature.models.Account;
-import com.revature.models.User;
 import com.revature.dao.AccountDAO;
 import com.revature.dao.IntrfAccountDAO;
 import com.revature.dao.IntrfUserDAO;
@@ -24,14 +23,9 @@ public class AccountServices {
 			return aDao.findAllAccounts();
 			}
 		
-		public Account findAccountByAcntNo(String acntNo) {
-			log.info("I am accessing account "+acntNo+" from the service.");
-			return aDao.findByAcntNo(acntNo); 			
-		}
-		
-		public Account findAccountByEmail(String email) {
-			log.info("accessing account with email "+email+" from the service.");
-			return aDao.findByEmail(email); 			
+		public Account findAccountByAcntId(int acntId) {
+			log.info("I am accessing account "+acntId+" from the service.");
+			return aDao.findByAcntId(acntId); 			
 		}
 		
 		public boolean addAccount(Account acnt) {
