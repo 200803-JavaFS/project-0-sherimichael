@@ -24,10 +24,10 @@ public class MemberScreen {
 		          + "4. Transfer money from one account to another."
 		          + "5. Exit."
 			);
-			id = userId;
 			String choice = scan.nextLine(); 
-			selectMenuSwitch(choice, id);
+			selectMenuSwitch(choice, userId);
 		}
+	
 	public void selectMenuSwitch(String choice, int userId) {
 		
 		TransaxnService transaxn = new TransaxnService();
@@ -36,14 +36,14 @@ public class MemberScreen {
 			case "1": 
 				log.info("@selectMenuSwith - checking balance");
 				b=transaxn.getAcntBalance(choice, userId);
-				System.out.println("Your new checking balance is $" + b);
+				//System.out.println("Your new checking balance is $" + b);
 			case "2":			
 				log.info("@selectMenuSwith - deposit");
 				System.out.println("What is the amount you want to deposit?");
 				String s = scan.nextLine();
 				int amount = Integer.parseInt(s);
 				b = transaxn.DepositMoney(userId, amount);
-				System.out.println("Your new checking balance is $" + b);
+				//System.out.println("Your new checking balance is $" + b);
 				break;
 			case "3": 
 				log.info("@selectMenuSwith - withdraw");
@@ -65,4 +65,19 @@ public class MemberScreen {
 				break;
 			}
 	}
+	
+	public void MoreMemberAxns(int userId) {
+		log.info("@MoreMemberAxns in MemberScreen");
+		
+		System.out.println("\nMay we help you with anything else today? \n"
+		          + "1. Check an account balance. \n"
+		          + "2. Make a deposit.\n"
+		          + "3. Make a withdrawel.\n"
+		          + "4. Transfer money from one account to another."
+		          + "5. Exit."
+			);
+			id = userId;
+			String choice = scan.nextLine(); 
+			selectMenuSwitch(choice, userId);
+		}
 }

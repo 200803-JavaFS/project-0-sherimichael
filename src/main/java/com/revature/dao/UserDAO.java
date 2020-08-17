@@ -60,7 +60,7 @@ public class UserDAO implements IntrfUserDAO {
 	@Override
 	public User findById(int id) {
 			try (Connection conn = ConnectionUtility.getConnection()) {
-				String sql = "SELECT * FROM users WHERE user_type = 1 and user_id =" + id + ";";
+				String sql = "SELECT * FROM users WHERE user_id =" + id + ";";
 
 				Statement statement = conn.createStatement();
 
