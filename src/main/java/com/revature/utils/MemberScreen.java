@@ -35,7 +35,7 @@ public class MemberScreen {
 		switch(choice){
 			case "1": 
 				log.info("@selectMenuSwith - checking balance");
-				transaxn.getAcntBalance(choice, userId);
+				transaxn.getAcntBalance(choice, userId, 1);
 			case "2":			
 				log.info("@selectMenuSwith - deposit");
 				System.out.print("\nWhat is the amount you want to deposit? $");

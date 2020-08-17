@@ -10,6 +10,7 @@ import com.revature.dao.UserDAO;
 import com.revature.models.Account;
 import com.revature.models.User;
 import com.revature.utils.AdminScreen;
+import com.revature.utils.EmployeeScreen;
 import com.revature.utils.MemberScreen;
 
 public class TransaxnService {
@@ -22,38 +23,34 @@ public class TransaxnService {
 		User u = new User();
 		UserDAO uDao = new UserDAO();
 		MemberScreen member = new MemberScreen();
+		EmployeeScreen employee = new EmployeeScreen();
+		AdminScreen admin = new AdminScreen();
 		
 		private double b;
 	
 		//**********Actions Authorized for All User Types (Members, Employees, Admins)******
-		public boolean getAcntBalance(String choice, int userId) {
+		public boolean getAcntBalance(String choice, int memberUserId, int userType) {
 			log.info("@getAcntBalance in TransaxnService");
-			a = aDao.findByUserId(userId);
+			a = aDao.findByUserId(memberUserId);
 			int aId = a.getAccountId();
-			System.out.println(a  );
+			int aType = a.getAcntType();
 			if (a.getAcntStatus() == 1) {
-				if ((uDao.findById(userId).getUserType() == 1) && (aDao.findByAcntId(aId).getAcntType() == 1)) {
-					System.out.println("\nYour checking account balance is $" + aDao.findByAcntId(aId).getBalance());
-					member.MoreMemberAxns(userId);
-					return true;
-				}else {
-					System.out.println("\nYour savings account balance is $" + aDao.findByAcntId(aId).getBalance());
-					member.MoreMemberAxns(userId);
-					return true;
-				} 
-			}else if ((uDao.findById(userId).getUserType() == 2)|| (uDao.findById(userId).getUserType() == 3)){
-				if (aDao.findByAcntId(aId).getAcntType() == 1) {
-					System.out.println("\nThe checking account balance for user id "+ userId + " is $" + aDao.findByAcntId(aId).getBalance());
-					return true;
-				}else {
-					System.out.println("\nThe savings account balance for user id "+ userId + " is $" + aDao.findByAcntId(aId).getBalance());
-					return true;
-				} 
-				//Pending members
-			}else {
-				System.out.println("\nYou do not have authorization to deposit money into this account.");
-				return false;
-			}		
+				if (aType == 1) {
+					System.out.println("\nThe checking account balance for member " + memberUserId + " is $" + aDao.findByAcntId(aId).getBalance()+"\n");
+					if (userType ==1) {member.MoreMemberAxns(memberUserId); return true;}
+					else if (userType == 2) {employee.EmployeeApp(); return true;}
+					else if (userType == 3) {admin.AdminApp(); return true;}
+					else {System.out.println("\nYou do not have authorization to deposit money into this account.");
+						return false;}
+				}else if (aType == 1) {
+					System.out.println("\nThe checking account balance for member " + memberUserId + " is $" + aDao.findByAcntId(aId).getBalance()+"\n");
+					if (userType ==1) {member.MoreMemberAxns(memberUserId); return true;}
+					else if (userType == 2) {employee.EmployeeApp(); return true;}
+					else if (userType == 3) {admin.AdminApp(); return true;}
+					else {System.out.println("\nYou do not have authorization to deposit money into this account.");
+						return false;}
+				}
+			}return false;
 		}
 		
 		public User createNewMember(String firstName, String lastName, String email, String password) {
@@ -69,7 +66,6 @@ public class TransaxnService {
 		public void checkAcntInfo(int userId) {
 			log.info("@CheckAcntInfo in TransaxnService");	
 			a = aDao.findByUserId(userId);
-			System.out.println(a);
 			System.out.println("Account Info for " + a.getAccountId() + " for " + a.getUserID() + ":" + a);		
 		}
 		

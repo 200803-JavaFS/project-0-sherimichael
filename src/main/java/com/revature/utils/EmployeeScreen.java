@@ -16,7 +16,6 @@ public class EmployeeScreen {
 	private static final Scanner scan = new Scanner(System.in);
 	User NewMember = new User();
 	Account NewAcnt = new Account();
-	int empUserId = 2;
 	
 	TransaxnService transaxn = new TransaxnService();
 	
@@ -43,18 +42,17 @@ public class EmployeeScreen {
 				log.info("@selectMenuSwitch - accessing member account info");
 				System.out.print("Enter the member number of the account you would like the balance for: ");
 				int memberUserId = Integer.parseInt(scan.nextLine());
-				transaxn.getAcntBalance(choice, memberUserId, empUserId);
+				transaxn.getAcntBalance(choice, memberUserId, 2);
 			case "2":			
 				log.info("@selectMenuSwitch - accessing account member information");
-				System.out.print("Enter the member number of the account you would like the balance for: ");
+				System.out.print("Enter the member number of the account you would like information for: ");
 				memberUserId = Integer.parseInt(scan.nextLine());
-				transaxn.checkAcntInfo(memberUserId, empUserId);
-				
+				transaxn.checkAcntInfo(memberUserId);			
 			case "3": 
 				log.info("@selectMenuSwitch - accessing personal member information");
 				System.out.print("Enter the member number of the account you would like the balance for: ");
 				memberUserId = Integer.parseInt(scan.nextLine());
-				transaxn.checkPersonalInfo(memberUserId, empUserId);
+				transaxn.checkPersonalInfo(memberUserId);
 				break;
 			case "4":
 				log.info("@selectMenuSwitch - confirm new Member");

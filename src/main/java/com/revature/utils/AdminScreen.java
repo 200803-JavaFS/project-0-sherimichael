@@ -10,6 +10,10 @@ public class AdminScreen {
 	private static final Logger log = LogManager.getLogger(EmployeeScreen.class);
 	private static final Scanner scan = new Scanner(System.in);
 	
+	public void AdminApp() {
+		log.info("@AdminApp() in AdminScreen");
+	}
+	
 	public void alertNewAcntRequested(int userId) {
 		log.info("@alertNewAcntRequested() in AdminScreen");
 		System.out.println("ATTN Admins: Member " + userId + " would like to open a new account.\n"
