@@ -18,7 +18,7 @@ public class LoginScreen {
 	public void acntLogin() {
 		
 		log.info("@acntLogin - userId");
-		System.out.println("\n\nGood day! To log into The Credit Union,");
+		System.out.println("\nGood day! To log into The Credit Union,");
 		System.out.print("please enter your userId:");
 		String userId = scan.nextLine();
 		System.out.print("please enter your password:");

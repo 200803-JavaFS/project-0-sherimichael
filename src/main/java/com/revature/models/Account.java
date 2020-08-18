@@ -82,7 +82,7 @@ public class Account implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Account [accountId=" + accountId + ", acntTypee=" + acntType
+		return "Account [accountId=" + accountId + ", acntType=" + acntType
 				+ ", balance=" + balance + ", acntStatus=" + acntStatus + ", userID=" + userID
 				+ "]";
 	}

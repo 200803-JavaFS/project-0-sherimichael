@@ -12,11 +12,11 @@ public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L; 
 	
-	private int userId;
+	private int userId;//login username is userId
 	private int userType; // 1 = member, 2 = employee, 3 = admin, 4 = awaiting confirmation
 	private String firstName;
 	private String lastName;
-	private String email; //login uname is email
+	private String email; 
 	private String password;
 	
 	//Constructors
@@ -97,7 +97,7 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [userType=" + userType + ", firstName=" + firstName + ", lastName=" + lastName + ", email_fk=" + email
+		return "User [userType=" + userType + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", password=" + password + "]";
 	}
 	

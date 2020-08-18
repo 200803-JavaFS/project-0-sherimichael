@@ -51,7 +51,7 @@ public class AccountDAO implements IntrfAccountDAO {
 	@Override
 	public Account findByUserId(int id) {
 		try (Connection conn = ConnectionUtility.getConnection()) {
-			String sql = "SELECT * FROM accounts WHERE acnt_id =" + id + ";";
+			String sql = "SELECT * FROM accounts WHERE user_id_fk =" + id + ";";
 
 			Statement statement = conn.createStatement();
 
@@ -134,22 +134,16 @@ public class AccountDAO implements IntrfAccountDAO {
 	@Override
 	public boolean updateAccount(Account a) {
 		try (Connection conn = ConnectionUtility.getConnection()) {
-			String sql = "UPDATE accounts SET account_id = ?, acnt_type = ?, balance= acnt_status = ?, user_id_fk =? "
+			String sql = "UPDATE accounts SET acnt_type = ?, balance = ?, acnt_status = ? "
 					+ "WHERE acnt_id = ?;";
 		
 			PreparedStatement statement = conn.prepareStatement(sql);
 
 			int index = 0;
-			statement.setInt(++index, a.getAccountId());
 			statement.setInt(++index, a.getAcntType());
 			statement.setDouble(++index, a.getBalance());
 			statement.setInt(++index, a.getAcntStatus());
-			if(a.getUserID()!=null) {
-				User u = a.getUserID();
-				statement.setInt(++index, u.getUserId());
-			}else {
-				statement.setString(++index, null);
-			}
+			statement.setInt(++index, a.getAccountId());
 		
 			statement.execute();
 			return true;

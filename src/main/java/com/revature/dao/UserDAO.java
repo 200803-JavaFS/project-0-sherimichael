@@ -88,7 +88,7 @@ public class UserDAO implements IntrfUserDAO {
 	public boolean addUser(User user) {
 		try (Connection conn = ConnectionUtility.getConnection()) {
 
-			String sql = "INSERT INTO users (user_id, user_type, first_name, last_name, pword, email)"
+			String sql = "INSERT INTO users (user_id, user_type, first_name, last_name, email, pword)"
 					+ "VALUES (?, ?, ?, ?, ?, ?);";
 
 			PreparedStatement statement = conn.prepareStatement(sql);
@@ -114,7 +114,7 @@ public class UserDAO implements IntrfUserDAO {
 	public boolean updateUser(User user) {
 		try (Connection conn = ConnectionUtility.getConnection()) {
 			String sql = "UPDATE users SET user_type = ?, first_name= ?, "
-					+ "last_name = ?, email_fk = ?, pword = ? WHERE user_id = ?;";
+					+ "last_name = ?, email= ?, pword = ? WHERE user_id = ?;";
 			
 			PreparedStatement statement = conn.prepareStatement(sql);
 
