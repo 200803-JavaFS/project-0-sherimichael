@@ -88,13 +88,12 @@ public class UserDAO implements IntrfUserDAO {
 	public boolean addUser(User user) {
 		try (Connection conn = ConnectionUtility.getConnection()) {
 
-			String sql = "INSERT INTO users (user_id, user_type, first_name, last_name, email, pword)"
-					+ "VALUES (?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO users (user_type, first_name, last_name, email, pword)"
+					+ "VALUES (?, ?, ?, ?, ?);";
 
 			PreparedStatement statement = conn.prepareStatement(sql);
 
 			int index = 0;
-			statement.setInt(++index, user.getUserId());
 			statement.setInt(++index, user.getUserType());
 			statement.setString(++index, user.getFirstName());
 			statement.setString(++index, user.getLastName());

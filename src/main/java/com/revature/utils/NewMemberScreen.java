@@ -39,8 +39,7 @@ public class NewMemberScreen {
 		String password = scan.nextLine().toLowerCase();
 		User u = ts.createMember(firstName, lastName, email, password);
 		System.out.println("Thank you, " + firstName + " " + lastName + ","
-				+ " for completing a"
-				+ "new user profile for The Credit Union. An employee will be contacting"
-				+"you soon to learn how we can best serve you.");
+				+ " for completing a new user profile for The Credit Union. \n"
+				+ " An employee will be contacting you soon to learn how we can best serve you.");
 	}
 }

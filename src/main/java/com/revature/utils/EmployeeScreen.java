@@ -17,8 +17,6 @@ import com.revature.services.TransaxnService;
 public class EmployeeScreen {
 	private static final Logger log = LogManager.getLogger(EmployeeScreen.class);
 	private static final Scanner scan = new Scanner(System.in);
-	User NewMember = new User();
-	Account NewAcnt = new Account();
 	
 	public void EmployeeApp() {
 		log.info("@EmployeeApp in EmployeeScreen");
@@ -29,9 +27,10 @@ public class EmployeeScreen {
 			         + "2. Access a member's savings account information.\n"
 			         + "3. Access a member's user profile.\n"
 			         + "4. Check if there are pending new member profiles.\n"
-			         + "4. Confirm a new member.\n"
-			         + "5. Confirm a new account.\n"
-			         + "6. Exit\n"
+			         + "5. Confirm a new member.\n"
+			         + "6. Confirm a new checking account.\n"
+			         + "7. Confirm a new savings account.\n"
+			         + "8. Exit\n"
 		);
 		String choice = scan.nextLine(); 
 		selectEmpMenuSwitch(choice);
@@ -50,23 +49,34 @@ public class EmployeeScreen {
 			case "1": 
 				log.info("@selectMenuSwitch - accessing member checking account info");
 				System.out.print("What is the member number for the checking account"
-						+"you would like to access: ");
+						+" you would like to access: ");
 				memberUserId = Integer.parseInt(scan.nextLine());
 				acnt = transaxn.checkAcntInfo(memberUserId);
-				if (acnt.getAcntType() == 1) {
-					System.out.println("Checking account Info for" + acnt.getUserID() + ":" + acnt +"\n");	
-				} else {System.out.println("This member does not have an active checking account.");}	
-				//MoreEmpAxns();
+				user = uDao.findById(memberUserId);
+				if (user.getUserType() == 4) {
+					System.out.println("/nYour account(s) is/are not yet active. Please see an admin./n");
+				}
+				else if (acnt.getAcntType() == 1) {
+					System.out.println("/nChecking account info for member " + acnt.getUserID() +":" + acnt +  "/n");
+					System.out.print(acnt);
+				} else if (acnt.getAcntStatus() == 0) {
+					System.out.println("/nThis checking account for member " + acnt.getUserID() + " is closed./n");	
+				}else{
+					System.out.println("/nThis current member does not have an active checking account./n");
+				}	
+				MoreEmpAxns();
 				break;
 			case "2":			
 				log.info("@selectMenuSwitch - accessing savings account member information");
 				System.out.print("What is the member number for the savings account"
-						+"you would like to access: ");
+						+" you would like to access: ");
 				memberUserId = Integer.parseInt(scan.nextLine());
 				acnt = transaxn.checkAcntInfo(memberUserId);
-				if (acnt.getAcntType() == 1) {
-					System.out.println("Account Info for " + acnt.getAccountId() + " for " + acnt.getUserID() + ":" + acnt);	
-				} else {System.out.println("This member does not have an active checking account.");}	
+				if (acnt.getAcntType() == 2) {
+					System.out.println("\nSavings account info for member " + acnt.getAccountId() + " for " + acnt.getUserID() + ":" + acnt);	
+				} else if (acnt.getAcntStatus() == 0) {
+					System.out.println("/nThis savings account for member " + acnt.getUserID() + " is closed./n");	
+				}else {System.out.println("This member does not have an active savings account.");}	
 				MoreEmpAxns();
 				break;
 			case "3": 
@@ -80,21 +90,33 @@ public class EmployeeScreen {
 				break;
 			case "4":
 				log.info("@selectMenuSwitch - checking for pending member user profiles");
-			
 				System.out.println("\n" + transaxn.CheckPendingUserProfiles() + "\n");
 				MoreEmpAxns();
 				break;
 			case "5":
 				log.info("@selectMenuSwitch - confirm new Member");
-				confirmNewMember(NewMember);
+				System.out.print("What is the member number for the profile"
+						+" you would like to confirm: ");
+				memberUserId = Integer.parseInt(scan.nextLine());
+				transaxn.confirmNewMember(memberUserId);	
 				MoreEmpAxns();
 				break;
 			case "6":
-				log.info("@selectMenuSwitch - confirm new Account (for new or current members)");
-				confirmNewAcnt(NewAcnt);
+				log.info("@selectMenuSwitch - confirm new checking account (for new or current members)");
+				System.out.print("What is the member number whose new checking account you would like to confirm: ");
+				memberUserId = Integer.parseInt(scan.nextLine());
+				transaxn.confirmNewCheckingAcnt(memberUserId);	
+				MoreEmpAxns();confirmNewAcnt(acnt);
 				MoreEmpAxns();
 				break;
 			case "7":
+				log.info("@selectMenuSwitch - confirm new savings account (for new or current members)");
+				System.out.print("What is the member number whose new savings account you would like to confirm: ");
+				memberUserId = Integer.parseInt(scan.nextLine());
+				transaxn.confirmNewSavingsAcnt(memberUserId);	
+				MoreEmpAxns();confirmNewAcnt(acnt);
+				MoreEmpAxns();
+			case "8":
 				log.info("@selectMenuSwitch - exit");
 				System.out.println("Thank you. We hope to see you again soon.");
 				break;
@@ -114,9 +136,10 @@ public class EmployeeScreen {
 		         + "2. Access a member's savings account information.\n"
 		         + "3. Access a member's user profile.\n"
 		         + "4. Check if there are pending new member profiles.\n"
-		         + "4. Confirm a new member.\n"
-		         + "5. Confirm a new account.\n"
-		         + "6. Exit\n"
+		         + "5. Confirm a new member.\n"
+		         + "6. Confirm a new checking account.\n"
+		         + "7. Confirm a new savings account.\n"
+		         + "8. Exit\n"
 		         
 			);
 			String choice = scan.nextLine(); 
@@ -124,8 +147,8 @@ public class EmployeeScreen {
 		}
 	//************************ New Member Services ****************************************
 	
-	public void confirmNewMember(User NewMember) {
-		log.info("@ in EmployeeScreen");
+	public void confirmNewMember(int memberUserId) {
+		log.info("@confirmNewMember in EmployeeScreen");
 		//transaxn.confirmNewMember(NewMember);	
 	}
 	

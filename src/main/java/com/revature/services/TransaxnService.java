@@ -45,6 +45,8 @@ public class TransaxnService {
 			u.setEmail(email);
 			u.setPassword(password);
 			u.setUserType(4);
+			uDao.addUser(u);
+			log.info("@CreateNewMember in TS - after uDao.addUser(u)");
 			return u;			
 		}
 		
@@ -191,29 +193,65 @@ public class TransaxnService {
 		
 		//++++++++++++++++Actions Authorized for Employees and Admins********************
 		
-		public void confirmNewMember(User NewMember) {
+		public void confirmNewMember(int newMemberUserId) {
 			log.info("@ConfirmNewMember in TransaxnService");
-			System.out.println(NewMember.getFirstName() + NewMember.getLastName() + " would like will\n"
-					+ "to become a member of The Credit Union. Please review. If all looks good,\n"
-					+ "set the UserType to 1. to activate the new user. Please also contact the\n"
-					+ "new member to talk accounts that best meet needs.\n\n");
+			u = uDao.findById(newMemberUserId);
+			System.out.println(u.getFirstName() + " " + u.getLastName() + " would like\n"
+					+ " to become a member of The Credit Union. Please review. If all looks good,\n"
+					+ " set the UserType to 1 to activate the new user. Please also contact the\n"
+					+ " new member to talk accounts that best meet needs.\n\n");
 
 			
 			System.out.println("Do you want to confirm this new membership?");
 			String yesNo = scan.nextLine().toLowerCase();
 			if (yesNo.equals("yes")) {
-				NewMember.setUserType(1);
-				uDao.addUser(NewMember);
+				u.setUserType(1);
+				uDao.updateUser(u);
 				System.out.println("The new member has been issued a member number and has an active user\n"
 								+ "account. Please ask an admin to contact the new member to set up accounts.\n");
-				AdminScreen as = new AdminScreen();
-				as.createNewAcnt(NewMember);
 			}else {System.out.println("We are sorry. We cannot confirm your membership at this time.");}
 		}
 		
-		public void confirmNewAcnt(Account NewAcnt) {
-			
+		public void confirmNewCheckingAcnt(int memberUserId) {
+			u = uDao.findById(memberUserId);
+			System.out.println(u.getFirstName() + " " + u.getLastName() + " has an active user profile and would like\n"
+					+ " to open a new checking account with The Credit Union. Please review to ensure there is a minimum\n"
+					+ " balance of $10 in this checking account. If all looks good, change the account type (1) and status (1)\n"
+					+ " to reflect the new active count.\n");
+
+			a = aDao.findByAcntId(memberUserId);
+			System.out.println("Account being considered: " + a);
+			System.out.println("\nIs there a minimum balance of $10 in this checking account?");
+			String yesNo = scan.nextLine().toLowerCase();
+			if (yesNo.equals("yes")) {
+				uDao.updateUser(u);
+				a.setAcntStatus(1);
+				a.setAcntType(1);
+				aDao.updateAccount(a);
+				System.out.println("This new checking account is now active.");
+			}else {System.out.println("This checking account cannot be opened at this time. It needs a minimum balance of $10\n");}
 		}
+		
+		public void confirmNewSavingsAcnt(int memberUserId) {
+			u = uDao.findById(memberUserId);
+			System.out.println(u.getFirstName() + " " + u.getLastName() + " has an active user profile and would like\n"
+					+ " to open a new savings account with The Credit Union. Please review to ensure there is a minimum\n"
+					+ " balance of $10 in this savings account. If all looks good, change the account type (2) and status (1)\n"
+					+ " to reflect the new active count.\n");
+
+			a = aDao.findByAcntId(memberUserId);
+			System.out.println("Account being considered: " + a);
+			System.out.println("\nIs there a minimum balance of $10 in this checking account?");
+			String yesNo = scan.nextLine().toLowerCase();
+			if (yesNo.equals("yes")) {
+				uDao.updateUser(u);
+				a.setAcntStatus(1);
+				a.setAcntType(2);
+				aDao.updateAccount(a);
+				System.out.println("This new savings account is now active.");
+			}else {System.out.println("This savings account cannot be opened at this time. It needs a minimum balance of $10.\n");}
+		}
+		
 		
 		public List<User> CheckPendingUserProfiles() {
 			log.info("@CheckPendingUserProfiles() in TransactionService");
