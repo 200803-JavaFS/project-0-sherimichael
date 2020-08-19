@@ -1,1 +1,81 @@
 2020-08-19 09:18:38 INFO  WelcomeConsole:13 - @welcomeApp - Welcome to The Credit Union
+2020-08-19 11:17:37 INFO  WelcomeConsole:13 - @welcomeApp - Welcome to The Credit Union
+2020-08-19 11:17:40 INFO  WelcomeConsole:13 - @welcomeApp - Welcome to The Credit Union
+2020-08-19 11:18:06 INFO  WelcomeConsole:13 - @welcomeApp - Welcome to The Credit Union
+2020-08-19 11:21:19 INFO  LoginScreen:20 - @acntLogin - userId
+2020-08-19 11:21:28 INFO  LoginServices:22 - @checkPassword
+2020-08-19 11:21:29 INFO  LoginServices:32 - User is member --> MemberScreen.MemberApp
+2020-08-19 11:21:29 INFO  WelcomeConsole:19 - @MemberApp in MemberScreen
+2020-08-19 11:21:32 INFO  WelcomeConsole:13 - @welcomeApp - Welcome to The Credit Union
+2020-08-19 11:21:39 INFO  LoginScreen:20 - @acntLogin - userId
+2020-08-19 11:21:49 INFO  LoginServices:22 - @checkPassword
+2020-08-19 11:21:49 INFO  LoginServices:37 - User is employee --> EmployeeScreen.EmployeeApp
+2020-08-19 11:21:49 INFO  EmployeeScreen:18 - @EmployeeApp in EmployeeScreen
+2020-08-19 11:21:52 INFO  EmployeeScreen:113 - @selectMenuSwitch - exit
+2020-08-19 11:21:52 INFO  WelcomeConsole:13 - @welcomeApp - Welcome to The Credit Union
+2020-08-19 11:21:55 INFO  LoginScreen:20 - @acntLogin - userId
+2020-08-19 11:22:07 INFO  LoginServices:22 - @checkPassword
+2020-08-19 11:22:08 INFO  LoginServices:42 - User is admin --> AdminScreen.AdminApp
+2020-08-19 11:22:08 INFO  EmployeeScreen:22 - @AdminApp() in AdminScreen
+2020-08-19 11:22:14 INFO  EmployeeScreen:169 - @selectMenuSwitch - exit
+2020-08-19 11:22:14 INFO  WelcomeConsole:13 - @welcomeApp - Welcome to The Credit Union
+2020-08-19 11:22:20 INFO  WelcomeConsole:13 - @welcomeApp - Welcome to The Credit Union
+2020-08-19 12:38:55 INFO  WelcomeConsole:13 - @welcomeApp - Welcome to The Credit Union
+2020-08-19 12:39:10 INFO  LoginScreen:20 - @acntLogin - userId
+2020-08-19 12:39:25 INFO  LoginServices:22 - @checkPassword
+2020-08-19 12:39:27 INFO  LoginServices:32 - User is member --> MemberScreen.MemberApp
+2020-08-19 12:39:27 INFO  WelcomeConsole:19 - @MemberApp in MemberScreen
+2020-08-19 12:39:48 INFO  WelcomeConsole:19 - @MemberApp in MemberScreen
+2020-08-19 12:39:53 INFO  WelcomeConsole:41 - @selectMenuSwitch - checking balance
+2020-08-19 12:39:53 INFO  TransaxnService:36 - @getAcntBalance in TransaxnService
+2020-08-19 12:40:07 INFO  WelcomeConsole:13 - @welcomeApp - Welcome to The Credit Union
+2020-08-19 12:40:11 INFO  LoginScreen:20 - @acntLogin - userId
+2020-08-19 12:40:17 INFO  LoginServices:22 - @checkPassword
+2020-08-19 12:40:18 INFO  LoginServices:32 - User is member --> MemberScreen.MemberApp
+2020-08-19 12:40:18 INFO  WelcomeConsole:19 - @MemberApp in MemberScreen
+2020-08-19 12:40:23 INFO  WelcomeConsole:64 - @selectMenuSwitch - withdraw
+2020-08-19 12:40:23 INFO  WelcomeConsole:63 - @withdrawApp in TransaxnsScreen
+2020-08-19 12:40:37 INFO  WelcomeConsole:75 - @selectMenuWithdrawSwitch() in TransaxnsScreen
+2020-08-19 12:40:37 INFO  WelcomeConsole:78 - @selectMenuWithdrawSwitch in TransaxnsScreen - withdraw from checking
+2020-08-19 12:40:44 INFO  TransaxnService:108 - @WithdrawChecking in TransaxnService
+2020-08-19 12:40:45 INFO  WelcomeConsole:92 - @MoreMemberAxns in MemberScreen
+2020-08-19 12:41:07 INFO  WelcomeConsole:19 - @MemberApp in MemberScreen
+2020-08-19 12:41:12 INFO  WelcomeConsole:19 - @MemberApp in MemberScreen
+2020-08-19 12:41:14 INFO  WelcomeConsole:13 - @welcomeApp - Welcome to The Credit Union
+2020-08-19 12:41:26 INFO  LoginScreen:20 - @acntLogin - userId
+2020-08-19 12:41:41 INFO  LoginServices:22 - @checkPassword
+2020-08-19 12:41:42 INFO  LoginServices:32 - User is member --> MemberScreen.MemberApp
+2020-08-19 12:41:42 INFO  WelcomeConsole:19 - @MemberApp in MemberScreen
+2020-08-19 12:41:55 INFO  WelcomeConsole:13 - @welcomeApp - Welcome to The Credit Union
+2020-08-19 12:41:59 INFO  LoginScreen:20 - @acntLogin - userId
+2020-08-19 12:42:05 INFO  LoginServices:22 - @checkPassword
+2020-08-19 12:42:06 INFO  LoginServices:42 - User is admin --> AdminScreen.AdminApp
+2020-08-19 12:42:06 INFO  EmployeeScreen:22 - @AdminApp() in AdminScreen
+2020-08-19 12:42:36 INFO  EmployeeScreen:125 - @selectMenuSwitch - checking for pending member user profiles
+2020-08-19 12:42:36 INFO  TransaxnService:251 - @CheckPendingUserProfiles() in TransactionService
+2020-08-19 12:42:37 INFO  EmployeeScreen:183 - @AdminApp() in AdminScreen
+2020-08-19 12:42:59 INFO  EmployeeScreen:175 - @selectMenuSwitch - invalid response
+2020-08-19 12:42:59 INFO  EmployeeScreen:22 - @AdminApp() in AdminScreen
+2020-08-19 12:43:39 INFO  EmployeeScreen:148 - @selectMenuSwitch - confirm new member
+2020-08-19 12:43:45 INFO  TransaxnService:187 - @ConfirmNewMember in TransaxnService
+2020-08-19 12:44:28 INFO  WelcomeConsole:13 - @welcomeApp - Welcome to The Credit Union
+2020-08-19 12:47:10 INFO  LoginScreen:20 - @acntLogin - userId
+2020-08-19 12:47:17 INFO  LoginServices:22 - @checkPassword
+2020-08-19 12:47:18 INFO  LoginServices:32 - User is member --> MemberScreen.MemberApp
+2020-08-19 12:47:18 INFO  WelcomeConsole:19 - @MemberApp in MemberScreen
+2020-08-19 12:47:21 INFO  WelcomeConsole:41 - @selectMenuSwitch - checking balance
+2020-08-19 12:47:21 INFO  TransaxnService:36 - @getAcntBalance in TransaxnService
+2020-08-19 12:47:22 INFO  WelcomeConsole:92 - @MoreMemberAxns in MemberScreen
+2020-08-19 12:47:26 INFO  WelcomeConsole:50 - @selectMenuSwitch - savings balance
+2020-08-19 12:47:26 INFO  TransaxnService:36 - @getAcntBalance in TransaxnService
+2020-08-19 12:47:26 INFO  WelcomeConsole:92 - @MoreMemberAxns in MemberScreen
+2020-08-19 12:47:31 INFO  WelcomeConsole:59 - @selectMenuSwitch - deposit
+2020-08-19 12:47:31 INFO  WelcomeConsole:20 - @transaxnTypes in TransaxnsScreen
+2020-08-19 12:47:38 INFO  WelcomeConsole:35 - @selectMenuDepositSwitch in TransaxnsScreen - deposit into checking
+2020-08-19 12:47:44 INFO  TransaxnService:68 - @MakeDeposit in TransaxnService
+2020-08-19 12:47:45 INFO  WelcomeConsole:92 - @MoreMemberAxns in MemberScreen
+2020-08-19 12:47:48 INFO  WelcomeConsole:107 - @TransferApp in TransaxnsScreen
+2020-08-19 12:47:55 INFO  TransaxnService:158 - @TransferMoney in TransaxnService
+2020-08-19 12:47:57 INFO  TransaxnService:108 - @WithdrawChecking in TransaxnService
+2020-08-19 12:47:58 INFO  TransaxnService:88 - @MakeDeposit in TransaxnService
+2020-08-19 12:47:59 INFO  WelcomeConsole:92 - @MoreMemberAxns in MemberScreen
