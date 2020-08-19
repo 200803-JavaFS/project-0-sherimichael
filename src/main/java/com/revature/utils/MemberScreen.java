@@ -1,0 +1,105 @@
+package com.revature.utils;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.revature.dao.AccountDAO;
+import com.revature.models.Account;
+import com.revature.services.TransaxnService;
+
+import java.util.List;
+import java.util.Scanner;
+
+public class MemberScreen {
+	
+	private static final Logger log = LogManager.getLogger(WelcomeConsole.class); 
+	private static final Scanner scan = new Scanner(System.in);
+	private int id;
+	private AccountDAO aDao;
+	private Account a;
+	
+	public void MemberApp(int userId) {
+		log.info("@MemberApp in MemberScreen");
+		
+		System.out.println("\nWelcome back! What would you like to do today? \n"
+		          + "1. Check your checking account balance. \n"
+		          + "2. Check your savings account balance. \n"
+		          + "3. Make a deposit.\n"
+		          + "4. Make a withdrawel.\n"
+		          + "5. Transfer money from one account to another."
+		          + "6. Open a new account.\n"
+		          + "7. Exit\n."
+			);
+			String choice = scan.nextLine(); 
+			selectMenuSwitch(choice, userId);
+	}
+	
+	public void selectMenuSwitch(String choice, int userId) {
+		
+		TransaxnService transaxn = new TransaxnService();
+		TransaxnsScreen ts = new TransaxnsScreen();
+
+		switch(choice){
+			case "1": 
+				log.info("@selectMenuSwitch - checking balance");
+				a = transaxn.getAcntBalance(userId); 
+				if ((a.getAcntStatus() == 1) && (a.getAcntType() == 1)){
+					System.out.println("\n\nYour checking account balance is $" + a.getBalance()+"\n\n");
+				}else {
+					System.out.println("\n\nIt seems you do not have an active checking account. Please see an adamin for more info.\n\n");}
+				MoreMemberAxns(userId);
+				break;
+			case "2": 
+				log.info("@selectMenuSwitch - savings balance");
+				a = transaxn.getAcntBalance(userId); 
+				if ((a.getAcntStatus() == 1) && (a.getAcntType() == 2)){
+					System.out.println("\n\nYour savings account balance is $" + a.getBalance()+"\n\n");
+				}else {
+					System.out.println("\n\nIt seems you do not have an active savings account. Please see an adamin for more info.\n\n");}
+				MoreMemberAxns(userId);
+				break;
+			case "3":			
+				log.info("@selectMenuSwitch - deposit");
+				ts.depositApp(userId);
+				break;
+			case "4": 
+				log.info("@selectMenuSwitch - withdraw");
+				ts = new TransaxnsScreen();
+				ts.withdrawApp(userId);
+				break;
+			case "5":
+				ts.transferApp(userId);
+				break;
+			case "6":
+				System.out.println("An admin of The Credit Union will contact you soon to help\n"
+						+ "you open a new account. Thank you!");
+				AdminScreen aScreen = new AdminScreen();
+				aScreen.alertNewAcntRequested(userId);
+				break;
+			case "7":
+				System.out.println("Thank you. We hope to see you again soon.");
+				break;
+			default:
+				System.out.println("You have entered an incorrect value. Please try again.");
+				MemberApp(id);
+				break;
+			}
+	}
+	
+	public void MoreMemberAxns(int userId) {
+		log.info("@MoreMemberAxns in MemberScreen");
+		
+		System.out.println("\nMay we help you with anything else today? \n"
+				  + "1. Check your checking account balance. \n"
+		          + "2. Check your savings account balance. \n"
+		          + "3. Make a deposit.\n"
+		          + "4. Make a withdrawel.\n"
+		          + "5. Transfer money from one account to another.\n2"
+		          + "6. Open a new account.\n"
+		          + "7. Exit\n"
+			);
+			id = userId;
+			String choice = scan.nextLine(); 
+			selectMenuSwitch(choice, userId);
+		}
+}

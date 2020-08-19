@@ -12,11 +12,11 @@ public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L; 
 	
-	private int id;
-	private int userType; // 1 = member, 2 = employee, 3 = admin
+	private int userId;//login username is userId
+	private int userType; // 1 = member, 2 = employee, 3 = admin, 4 = awaiting confirmation
 	private String firstName;
 	private String lastName;
-	private Account email; //login uname is email
+	private String email; 
 	private String password;
 	
 	//Constructors
@@ -26,7 +26,7 @@ public class User implements Serializable {
 	}
 	
 	//full args minus id constructor
-	public User(int userType, String firstName, String lastName, Account email, String password) {
+	public User(int userType, String firstName, String lastName, String email, String password) {
 		super();
 		this.userType = userType;
 		this.firstName = firstName;
@@ -35,10 +35,10 @@ public class User implements Serializable {
 		this.password = password;
 	}
 	
-	//fulls args constructor
-	public User(int id, int userType, String firstName, String lastName, Account email, String password) {
+	//full args constructor
+	public User(int userId, int userType, String firstName, String lastName, String email, String password) {
 		super();
-		this.id = id;
+		this.userId = userId;
 		this.userType = userType;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -46,12 +46,12 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public int getId() {
-		return id;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public int getUserType() {
@@ -79,11 +79,11 @@ public class User implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public Account getEmail() {
+	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(Account email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
