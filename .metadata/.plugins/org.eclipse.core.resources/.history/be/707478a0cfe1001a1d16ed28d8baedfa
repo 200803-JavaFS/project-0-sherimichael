@@ -1,0 +1,278 @@
+package com.revature.services;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.revature.dao.AccountDAO;
+import com.revature.dao.UserDAO;
+import com.revature.models.Account;
+import com.revature.models.User;
+import com.revature.utils.AdminScreen;
+import com.revature.utils.EmployeeScreen;
+import com.revature.utils.MemberScreen;
+
+public class TransaxnService {
+	
+	private static final Logger log = LogManager.getLogger(TransaxnService.class); 
+	private static final Scanner scan = new Scanner(System.in);
+	
+		AccountDAO aDao = new AccountDAO();
+		Account a = new Account();
+		Account a2 = new Account();
+		User u = new User();
+		UserDAO uDao = new UserDAO();
+		MemberScreen member = new MemberScreen();
+		EmployeeScreen employee = new EmployeeScreen();
+		AdminScreen admin = new AdminScreen();
+		
+		private double b;
+	
+		//**********Actions Authorized for All User Types (Members, Employees, Admins)******
+		public Account getAcntBalance(int memberUserId) {
+			log.info("@getAcntBalance in TransaxnService");
+			a = aDao.findByUserId(memberUserId);
+			return a;
+		}
+		
+		public User createMember(String firstName, String lastName, String email, String password) {
+			log.info("@CreateNewMember in TransaxnService");
+			u.setFirstName(firstName);
+			u.setLastName(lastName);
+			u.setEmail(email);
+			u.setPassword(password);
+			u.setUserType(4);
+			uDao.addUser(u);
+			log.info("@CreateNewMember in TS - after uDao.addUser(u)");
+			return u;			
+		}
+		
+		public Account checkAcntInfo(int userId) {
+			log.info("@CheckAcntInfo in TransaxnService");	
+			a = aDao.findByUserId(userId);
+			return a;	
+		}
+		
+		public User checkPersonalInfo(int userId) {
+			log.info("@CheckPersonalInfo in TransaxnService");	
+			u = uDao.findById(userId);	
+			return u;
+		}
+		
+		//**********Actions Authorized for Members and Admins)******
+	
+		public boolean depositChecking(int userId, double depositAmount) {
+			log.info("@MakeDeposit in TransaxnService");
+			a = aDao.findByUserId(userId);
+			System.out.println(a);
+			if (a.getAcntStatus() == 1) {
+				if (a.getAcntType() == 1) {
+					b = a.getBalance();
+					System.out.println("\nThe starting balance for checking account number " + a.getAccountId() + " is $" + b +"\n");
+					b = b + depositAmount;
+					a.setBalance(b);
+					System.out.println("With a deposit of $" + depositAmount + ", the new balance for this checking account is $" + b +"\n");
+					aDao.updateAccount(a);
+					return true;}
+			}else {
+				System.out.println("\nIt seems that you do not have an active checking account. Please see an admin.\n");
+				return false;}
+			//member.MoreMemberAxns(userId);
+			return false;
+		}
+		
+		public boolean depositSavings(int userId, double depositAmount) {
+			log.info("@MakeDeposit in TransaxnService");
+			a = aDao.findByUserId(userId);
+			if (a.getAcntStatus() == 1) {
+				b = a.getBalance();
+				if (a.getAcntType() == 2) {
+					System.out.println("\nThe starting balance for savings account number " + a.getAccountId() + " is $" + b + "\n");
+					b = b + depositAmount;
+					a.setBalance(b);
+					System.out.println("With a deposit of $" + depositAmount + ", the new balance for this savings account is $" + b +"\n");
+					aDao.updateAccount(a);
+					return true;
+				}else {
+					System.out.println("\nIt seems that you do not have an active savings account. Please see an admin.\n");
+					return false;
+					}
+			}
+			return false;
+		}
+	
+		public boolean withdrawChecking(int userId, double withdrawAmount) {
+			log.info("@WithdrawChecking in TransaxnService");
+			a = aDao.findByUserId(userId);
+			if (a.getAcntType() == 1) {
+				if (a.getAcntStatus() == 1) {
+					b = a.getBalance();
+					System.out.println("\nThe starting balance for checking account number " + a.getAccountId() + " is $" + b);
+					if (b>= withdrawAmount) {
+						b = b - withdrawAmount;
+						a.setBalance(b);
+						System.out.println("\nWith a withdrawal of $" + withdrawAmount + ", the new balance for this account is $" + b);
+						aDao.updateAccount(a);
+						return true;
+				} else {
+					System.out.println("\nThere are not enough finds to withdraw $" + withdrawAmount);
+					member.MoreMemberAxns(userId);
+					return false;}
+				}
+			}else {
+				System.out.println("\nIt seems that you do not have an active checking account. Please see an admin.\"");
+				return false;
+			}
+			return false;
+		}
+		
+		public boolean withdrawSavings(int userId, double withdrawAmount) {
+			log.info("@WithdrawSavings in TransaxnService");	
+			a = aDao.findByUserId(userId);
+			if (a.getAcntType() == 2) {
+				if (a.getAcntStatus() == 1) {
+					b = a.getBalance();
+					System.out.println("\nThe starting balance for savings account number " + a.getAccountId() + " is $" + b);
+					if (b>= withdrawAmount) {
+						b = b - withdrawAmount;
+						a.setBalance(b);
+						System.out.println("\nWith a withdrawal of $" + withdrawAmount + ", the new balance for this account is $" + b);
+						aDao.updateAccount(a);
+						return true;
+				} else {
+					System.out.println("\nThere are not enough finds to withdraw $" + withdrawAmount);
+					member.MoreMemberAxns(userId);
+					return false;}
+				}
+			}else {
+				System.out.println("\nIt seems that you do not have an active savings account. Please see an admin.\"");
+				return false;
+			}
+			return false;
+		}
+	
+		public boolean transferMoney(int userId, int toId, double amount) {
+			log.info("@TransferMoney in TransaxnService");
+			a = aDao.findByUserId(userId);
+			a2 = aDao.findByUserId(toId);
+			double fromInitialBalance = a.getBalance();
+			if (fromInitialBalance > amount) {
+				if (a.getAcntType() == 1) {
+					System.out.println("Transfer from account: Your checking account will be debited $" + amount + "\n");
+					withdrawChecking(userId, amount);
+				}else if (a.getAcntType() == 2) {
+					System.out.println("Transfer from account: Your savings account will be debited $" + amount);
+					withdrawSavings(userId, amount);		
+				}else {
+					System.out.println("There are not sufficient funds to make this transfer.");
+				}
+			}
+			if (fromInitialBalance > amount) {
+				if (a2.getAcntType() == 1) {
+					System.out.println("Transfer to account: The checking account for the member number receiving funds, member " + toId + ", will be credited $" + amount + "\n");
+					depositChecking(toId, amount);
+				}else if (a2.getAcntType() == 2){
+					System.out.println("Transfer to account: The savings account for member number receiving funds, member " + toId + " will be credited $" + amount + "\n");
+					depositSavings(toId, amount);
+				}return true;		
+			}return false;
+		}
+		
+		//++++++++++++++++Actions Authorized for Employees and Admins********************
+		
+		public void confirmNewMember(int newMemberUserId) {
+			log.info("@ConfirmNewMember in TransaxnService");
+			u = uDao.findById(newMemberUserId);
+			System.out.println(u);
+			System.out.println(u.getFirstName() + " " + u.getLastName() + " would like "
+					+ " to become a member of The Credit Union. Please review. \nIf all looks good,"
+					+ " set the UserType to 1 to activate the new user.\n");
+
+			
+			System.out.println("Do you want to confirm this new membership? \n"
+					+ "1. Yes\n"
+					+ "2. No\n");
+			int x = scan.nextInt();
+			if (x == 1) {
+				int userType = 1;
+				u.setUserType(userType);
+				System.out.println(u.getUserType());
+				uDao.updateUser(u);
+				System.out.println("The new member has been issued a member number and has an active user\n"
+								+ "account. Please ask an admin to contact the new member to set up accounts.\n");
+			}else {System.out.println("We are sorry. We cannot confirm your membership at this time.");}
+		}
+		
+		public void confirmNewCheckingAcnt(int memberUserId) {
+			u = uDao.findById(memberUserId);
+			System.out.println(u.getFirstName() + " " + u.getLastName() + " has an active user profile and would like\n"
+					+ " to open a new checking account with The Credit Union. Please review to ensure there is a minimum\n"
+					+ " balance of $10 in this checking account. If all looks good, change the account type (1) and status (1)\n"
+					+ " to reflect the new active count.\n");
+
+			a = aDao.findByAcntId(memberUserId);
+			System.out.println("Account being considered: " + a);
+			System.out.println("\nIs there a minimum balance of $10 in this checking account?");
+			String yesNo = scan.nextLine().toLowerCase();
+			if (yesNo.equals("yes")) {
+				uDao.updateUser(u);
+				a.setAcntStatus(1);
+				a.setAcntType(1);
+				aDao.updateAccount(a);
+				System.out.println("This new checking account is now active.");
+			}else {System.out.println("This checking account cannot be opened at this time. It needs a minimum balance of $10\n");}
+		}
+		
+		public void confirmNewSavingsAcnt(int memberUserId) {
+			u = uDao.findById(memberUserId);
+			System.out.println(u.getFirstName() + " " + u.getLastName() + " has an active user profile and would like\n"
+					+ " to open a new savings account with The Credit Union. Please review to ensure there is a minimum\n"
+					+ " balance of $10 in this savings account. If all looks good, change the account type (2) and status (1)\n"
+					+ " to reflect the new active count.\n");
+
+			a = aDao.findByAcntId(memberUserId);
+			System.out.println("Account being considered: " + a);
+			System.out.println("\nIs there a minimum balance of $10 in this checking account?");
+			String yesNo = scan.nextLine().toLowerCase();
+			if (yesNo.equals("yes")) {
+				uDao.updateUser(u);
+				a.setAcntStatus(1);
+				a.setAcntType(2);
+				aDao.updateAccount(a);
+				System.out.println("This new savings account is now active.");
+			}else {System.out.println("This savings account cannot be opened at this time. It needs a minimum balance of $10.\n");}
+		}
+		
+		
+		public List<User> CheckPendingUserProfiles() {
+			log.info("@CheckPendingUserProfiles() in TransactionService");
+			List<User> list = new ArrayList<>();
+			List<User> l2 = new ArrayList<>();
+			
+			list = uDao.findAll();
+			System.out.println(list);
+			for (User u: list) {
+				if (u.getUserType() == 4) {
+					l2.add(u);
+				}
+			}
+			return l2;
+		}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

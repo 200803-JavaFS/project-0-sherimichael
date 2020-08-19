@@ -1,0 +1,173 @@
+package com.revature.utils;
+
+import java.util.Scanner;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.revature.dao.AccountDAO;
+import com.revature.dao.UserDAO;
+import com.revature.models.Account;
+import com.revature.models.User;
+import com.revature.services.TransaxnService;
+
+public class AdminScreen {
+	
+	private static final Logger log = LogManager.getLogger(EmployeeScreen.class);
+	private static final Scanner scan = new Scanner(System.in);
+	
+	AccountDAO aDao = new AccountDAO();
+	
+	public void AdminApp() {
+		log.info("@AdminApp() in AdminScreen");
+		System.out.println("\n\nWelcome valued Admin!\n"
+				 + "What would you like to do today? \n\n"
+				 + "1. Access a member's checking account information.\n"
+		         + "2. Access a member's savings account information.\n"
+		         + "3. Access a member's user profile.\n"
+		         + "4. Deposit/Withdraw/Transfer money for a member."
+		         + "5. Check if there are pending new member profiles.\n"
+		         + "6. Create a new member profile.\n"
+				 + "7. Create a new checking account.\n"
+				 + "8. Create a new savings account.\n"
+		         + "9. Confirm a new member.\n"
+		         + "10. Confirm a new checking account.\n"
+		         + "11. Confirm a new savings account.\n"
+		         + "12. Exit\n"
+	);
+	String choice = scan.nextLine(); 
+	selectAdminMenuSwitch(choice);
+	}
+	
+public void selectAdminMenuSwitch(String choice) {
+		
+		TransaxnService transaxn = new TransaxnService();
+		EmployeeScreen es = new EmployeeScreen();
+		UserDAO uDao = new UserDAO();
+		Account acnt= new Account();
+		User user = new User();
+		int memberUserId;
+
+		switch(choice){
+			case "1": 
+				log.info("@selectMenuSwitch - accessing member checking account info");
+				System.out.print("\nWhat is the member number for the checking account"
+						+" you would like to access: ");
+				memberUserId = Integer.parseInt(scan.nextLine());
+				acnt = transaxn.checkAcntInfo(memberUserId);
+				user = uDao.findById(memberUserId);
+				if (user.getUserType() == 4) {
+					System.out.println("\nYour account(s) is/are not yet active. Please see an admin./n");
+				}
+				else if (acnt.getAcntType() == 1) {
+					System.out.println("\nChecking account info for member " + acnt.getUserID() +":" + acnt +  "/n");
+					System.out.print(acnt);
+				} else if (acnt.getAcntStatus() == 0) {
+					System.out.println("\nThis checking account for member " + acnt.getUserID() + " is closed./n");	
+				}else{
+					System.out.println("\nThis current member does not have an active checking account./n");
+				}	
+				MoreAdminAxns();
+				break;
+			case "2":			
+				log.info("@selectMenuSwitch - accessing savings account member information");
+				System.out.print("What is the member number for the savings account"
+						+" you would like to access: ");
+				memberUserId = Integer.parseInt(scan.nextLine());
+				acnt = transaxn.checkAcntInfo(memberUserId);
+				if (acnt.getAcntType() == 2) {
+					System.out.println("\nSavings account info for member " + acnt.getAccountId() + " for " + acnt.getUserID() + ":" + acnt);	
+				} else if (acnt.getAcntStatus() == 0) {
+					System.out.println("/nThis savings account for member " + acnt.getUserID() + " is closed./n");	
+				}else {System.out.println("This member does not have an active savings account.");}	
+				MoreAdminAxns();
+				break;
+			case "3": 
+				log.info("@selectMenuSwitch - creating member user profile");
+				System.out.print("\nEnter the member number of the user profile you would "
+						+ "like to access: ");
+				memberUserId = Integer.parseInt(scan.nextLine());
+				user = transaxn.checkPersonalInfo(memberUserId);
+				System.out.println("\nMember profile for member number " + user.getUserId() + ":" + user + "\n");
+				MoreAdminAxns();
+				break;
+			case "4": 
+				log.info("@selectMenuSwitch - accessing member user profile");
+				System.out.print("\nEnter the member number of the user profile you would "
+						+ "like to access: ");
+				memberUserId = Integer.parseInt(scan.nextLine());
+				user = transaxn.checkPersonalInfo(memberUserId);
+				System.out.println("\nMember profile for member number " + user.getUserId() + ":" + user + "\n");
+				MoreAdminAxns();
+				break;
+			case "4":
+				log.info("@selectMenuSwitch - deposit/withdraw/transfer for accounts");
+				System.out.println("\n" + transaxn.CheckPendingUserProfiles() + "\n");
+				//MoreAdminAxns();
+				break;
+			case "5":
+				log.info("@selectMenuSwitch - checking for pending member user profiles");
+				es.selectEmpMenuSwitch("4");
+				//MoreAdminAxns();
+				break;
+			case "6":
+				log.info("@selectMenuSwitch - confirm new Member");
+				es.selectEmpMenuSwitch("5");
+				//MoreAdminAxns();
+				break;
+			case "7":
+				log.info("@selectMenuSwitch - confirm new checking account (for new or current members)");
+				es.selectEmpMenuSwitch("6");
+				//MoreAdminAxns();
+				break;
+			case "8":
+				log.info("@selectMenuSwitch - confirm new savings account (for new or current members)");
+				es.selectEmpMenuSwitch("7");
+				//MoreAdminAxns();
+			case "9":
+				log.info("@selectMenuSwitch - exit");
+				System.out.println("Thank you. We hope to see you again soon.");
+				break;
+			default:
+				log.info("@selectMenuSwitch - invalid response");
+				System.out.println("You have entered an incorrect value. Please select again.");
+				AdminApp();
+				break;
+			}
+		}
+
+	public void MoreAdminAxns() {
+		log.info("@AdminApp() in AdminScreen");
+		System.out.println("\nWould you like to do anything else today? \n\n"
+			 + "1. Access a member's checking account information.\n"
+	         + "2. Access a member's savings account information.\n"
+	         + "3. Access a member's user profile.\n"
+	         + "4. Deposit/Withdraw/Transfer money for a member."
+	         + "5. Check if there are pending new member profiles.\n"
+	         + "6. Confirm a new member.\n"
+	         + "7. Confirm a new checking account.\n"
+	         + "8. Confirm a new savings account.\n"
+	         + "9. Exit\n"
+		);
+		String choice = scan.nextLine(); 
+		selectAdminMenuSwitch(choice);
+	}
+	
+	public void alertNewAcntRequested(int userId) {
+		log.info("@alertNewAcntRequested() in AdminScreen");
+		System.out.println("ATTN Admins: Member " + userId + " would like to open a new account.\n"
+				+ "Please contact this member.");
+	}
+	
+	public void createNewAcnt(User NewMember) {
+		log.info("@createNewAcnt() in AdminScreen");
+		UserDAO uDao = new UserDAO();
+		NewMember.getUserId();
+		
+		//aDao.addAccount(		
+		
+	}
+	
+	
+
+}
